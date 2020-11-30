@@ -8,7 +8,7 @@ const app = express();
 const login_router = require('./routers/login_router');
 const register_router = require('./routers/register_router');
 const admin_router = require('./routers/admin-router');
-const auth_middleware = require('./middlewares/authentication_middleware'); 
+
 
 // set template pug
 app.set('view engine', 'pug');
@@ -23,14 +23,14 @@ app.use(express.static('public'));
 // router
 app.get('/', (req, res) => res.render('index'))
 app.use(login_router);
-app.use(auth_middleware.auth, register_router);
+app.use(register_router);
 app.use('/admin', admin_router);
 
 // listen
 app.listen('3000');
 
 // connect database
-mongoose.connect(process.env.URI_MONGODB, {
+mongoose.connect('mongodb+srv://admin:Hoang0935418109@doantotnghiep.gpspg.mongodb.net/truyenonline', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }, (err) => {
@@ -40,4 +40,5 @@ mongoose.connect(process.env.URI_MONGODB, {
     }
     console.log('connect to database');
 })
+
 

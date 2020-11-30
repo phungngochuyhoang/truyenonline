@@ -75,10 +75,12 @@
                     font-size: 14px;
                     color: #FF0000;
                     align-self: center;
+                    width: 75%;
+                    padding: 0 4px;
                 }
                 input[type="submit"] {
                     font-size: 14px;
-                    width: 100px;
+                    width: 25%;
                     color: $color_white;
                     background-color: $color_dark_green;
                     border: 0;
