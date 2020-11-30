@@ -1,0 +1,7 @@
+.container-header {
+    border: 1px solid $color_dark-green;
+    .col-xl-5,
+    .col-xl-7 {
+        background-color: $color_dark-green;
+    }
+}
