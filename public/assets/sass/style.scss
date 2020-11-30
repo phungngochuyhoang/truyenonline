@@ -1,0 +1,14 @@
+@import './base/font';
+@import './base/color';
+@import './layouts/footer';
+@import './layouts/header';
+@import './components/navbar';
+@import './pages/login';
+@import './pages/home';
+@import './pages/admin';
+@import './pages/admin-category';
+
+* {
+    margin: 0;
+    padding: 0;
+}
