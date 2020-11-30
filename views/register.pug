@@ -91,19 +91,19 @@ head
         .body-form
           form(action="" method="POST")
             .box-input
-              input.input-effect-username(type='text', name='username', placeholder='Tên đăng nhập', autocomplete='off', value='')
+              input.input-effect-username(type='text', name='username', placeholder='Tên đăng nhập', autocomplete='off', value= value ? value.username:'')
               label#username  T&ecirc;n &dstrok;&abreve;ng nh&#x1EAD;p 
             .box-input
-              input.input-effect-email(type='email', name='email', placeholder='Email', autocomplete='off', value='')
+              input.input-effect-email(type='text', name='email', placeholder='Email', autocomplete='off', value= value ? value.email : '')
               label#email  Email 
             .box-input
-              input.input-effect-password(type='password', name='passowrd', placeholder='Mật khẩu', value='')
+              input.input-effect-password(type='password', name='password', placeholder='Mật khẩu', value='')
               label#password  M&#x1EAD;t kh&#x1EA9;u 
             .box-input
               input.input-effect-password-retype(type='password', name='password-retype', placeholder='Nhập lại mật khẩu', value='')
               label#password-retype  Nh&#x1EAD;p l&#x1EA1;i m&#x1EAD;t kh&#x1EA9;u 
             .box-input
-              span.error
+              span.error= err ? err[0] : '' 
               input(type='submit', name='btn-submit', value='Đăng Ký')
     // login
 // End login
