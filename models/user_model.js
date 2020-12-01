@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
         type: Date, 
         default: Date.now
     },
-    role: Boolean
+    role: Number
 })
 
 const User = mongoose.model('User', userSchema, 'Users')

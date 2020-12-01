@@ -1,107 +1,23 @@
-doctype html
-head
-  meta(charset='UTF-8')
-  meta(name='viewport', content='width=device-width, initial-scale=1.0')
-  title Document
-  link(rel='stylesheet', href='./resource/css/bootstrap.min.css')
-  link(rel='stylesheet', href='./resource/css/swiper.css')
-  link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css')
-  link(rel='stylesheet', href='./assets/css/style.css')
-// Header
-.container-fluid.container-header
-  .row
-    .col-lg-5.col-xl-5
-      .navbar-header-left
-        a.navbar-logo(href='/')
-          img(src='./assets/img/lg.png', alt='not img')
-        .navbar-category.navbar-category-1
-          .navbar-category-btn
-            i.fas.fa-bars
-            span  Danh M&#x1EE5;c 
-          #nav-list-category.nav-list-category
-            ul.list-category
-              li
-                a(href='#')  truy&#x1EC7;n m&#x1EDB;i 
-              li
-                a(href='#')  truy&#x1EC7;n ho&agrave;n th&agrave;nh 
-              li
-                a(href='#')  b&#x1EA3;ng x&#x1EBF;p h&#x1EA1;ng 
-              li
-                a(href='#')  truy&#x1EC7;n &dstrok;&#x1EC1; c&#x1EED; 
-        .navbar-category.navbar-category-2
-          .navbar-category-btn
-            i.fas.fa-bars
-            span  Th&#x1EC3; Lo&#x1EA1;i 
-          #nav-list-category.nav-list-category
-            ul.list-category
-              li
-                a(href='#')  Ki&#x1EBF;m hi&#x1EC7;p1 
-              li
-                a(href='#')  ti&ecirc;n hi&#x1EC7;p 
-              li
-                a(href='#')  chi&#x1EBF;n tranh 
-              li
-                a(href='#')  vi&#x1EC5;n t&#x1B0;&#x1EDF;ng 
-              li
-                a(href='#')  ma &#x1EA3;o 
-              li
-                a(href='#')  th&#x1EC3; thao 
-              li
-                a(href='#')  chi&#x1EBF;n thu&#x1EAD;t 
-              li
-                a(href='#')  xuy&ecirc;n kh&ocirc;ng 
-              li
-                a(href='#')  m&#x1EA1;c th&#x1EBF; 
-              li
-                a(href='#')  &dstrok;&ocirc; th&#x1ECB; 
-              li
-                a(href='#')  tu ti&ecirc;n 
-              li
-                a(href='#')  Linh d&#x1ECB; 
-              li
-                a(href='#')  &Dstrok;&#x1ED3;ng nh&acirc;n 
-    .col-lg-7.col-xl-7
-      ul.navbar-header-right
-        li
-          .box-search
-            form#search-name
-              input(type='text', name='story-name', value='', placeholder='Tìm tên truyện')
-              button.btn-search-name(type='submit')
-                i.fas.fa-search
-        li
-          .box-user
-            a(href='/login')  &Dstrok;&abreve;ng Nh&#x1EAD;p 
-            span.hr
-            a(href='/register')  &Dstrok;&abreve;ng k&yacute; 
-// End header
-// login
+include layout/user_layout.pug
 .container-fluid.container-login
   .row
-    // decorate
     .col-md-2.col-lg-2.col-xl-2
       .box-decorate
         .element-decorate
           img(src='./assets/img/bamboo.png', alt='')
-    // decorate
-    // login
     .col-md-8.col-lg-8.col-xl-8
       .box-form
         .head-form
           h2  &Dstrok;&abreve;ng Nh&#x1EAD;p 
         .body-form
-          form(id='')
+          form(id='' method="POST")
             .box-input
-              input.input-effect-username(type='text', name='username', placeholder='Tên đăng nhập', autocomplete='off', value='')
+              input.input-effect-username(type='text', name='username', placeholder='Tên đăng nhập', autocomplete='off', value= value ? value.username : '')
               label#username  T&ecirc;n &dstrok;&abreve;ng nh&#x1EAD;p 
             .box-input
-              input.input-effect-password(type='password', name='passowrd', placeholder='Mật khẩu', value='')
+              input.input-effect-password(type='password', name='password', placeholder='Mật khẩu', value='')
               label#password  M&#x1EAD;t kh&#x1EA9;u 
             .box-input
-              span.error
+              span.error= err ? err[0] : ''
               input(type='submit', name='btn-submit', value='Đăng nhập')
-    // login
-// End login
-script(src='./resource/js/jquery.js')
-script(src='./resource/js/bootstrap.min.js')
-script(src='./resource/js/swiper.js')
-script(src='./assets/js/effect.js')
+include layout/script.pug

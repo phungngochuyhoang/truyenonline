@@ -1,4 +1,5 @@
 const md5 = require('md5');
+const User = require('../models/user_model');
 
 const Users = require('../models/user_model');
 
@@ -15,3 +16,4 @@ module.exports.post_register = function (req, res) {
     })
     user.save();
 }
+

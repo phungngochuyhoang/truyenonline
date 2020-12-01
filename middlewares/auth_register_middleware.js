@@ -8,7 +8,7 @@ module.exports.auth_register = async function(req, res, next) {
     if(!req.body.username) {
         error.push('Username là bắt buộc')
     }else if(user.length !== 0) {
-        if(user[0].username === req.body.username) error.push('Tên đã tồn tại')
+        if(user[0].username === req.body.username) error.push('Username đã tồn tại')
     }
     // check vaild email
     if(!req.body.email) {
@@ -36,11 +36,8 @@ module.exports.auth_register = async function(req, res, next) {
         })
         return;
     }else {
-       res.render('login', {
-           value: req.body
-       })
+       res.redirect('login')
     }
-
     next();
 }
 
