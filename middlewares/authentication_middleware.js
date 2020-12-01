@@ -1,9 +1,14 @@
 
-module.exports.auth_register = function(req, res, next) {
+const User = require('../models/user_model');
+
+module.exports.auth_register = async function(req, res, next) {
     let error = [];
+    let user = await User.find({username: req.body.username})
     // check valid username
     if(!req.body.username) {
         error.push('Username là bắt buộc')
+    }else if(user.length !== 0) {
+        if(user[0].username === req.body.username) error.push('Tên đã tồn tại')
     }
     // check vaild email
     if(!req.body.email) {
