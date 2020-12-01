@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.get('/', controllers.get_admin);
 
+router.get('/exit', controllers.get_exit);
 
 module.exports = router;
