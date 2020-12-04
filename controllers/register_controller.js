@@ -1,10 +1,13 @@
 const md5 = require('md5');
-const User = require('../models/user_model');
 
 const Users = require('../models/user_model');
+const Category = require('../models/category_model');
 
-module.exports.get_register = function (req, res) {
-    res.render('register')
+module.exports.get_register = async function (req, res) {
+		let dataCategory = await Category.find();
+    res.render('register', {
+			category: dataCategory
+		})
 }
 
 module.exports.post_register = function (req, res) {

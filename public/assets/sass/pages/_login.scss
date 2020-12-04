@@ -1,8 +1,8 @@
 .container-login {
     height: calc(100vh - 38px);
     position: relative;
-    background-image: url('../img/bg.jpg');
-    background-position: 0 65%;
+		background-image: url('../img/s5.png');
+		background-size: cover;
     .box-decorate {
         display: flex;
         justify-content: center;
@@ -28,7 +28,7 @@
         padding: 10px;
         border-radius: 2px;
         background-color: $color_white;
-        box-shadow: 1px 1px 40px $color-black;
+        box-shadow: 1px 1px 5px $color-black;
         .head-form {
             padding: 2px 2px 2px 8px;
             h2 {
@@ -103,5 +103,5 @@
     top: 0;
     width: 100%;
     height: calc(100vh - 38px);
-    opacity: .6;
+    opacity: .3;
 }

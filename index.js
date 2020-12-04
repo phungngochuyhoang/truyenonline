@@ -11,6 +11,7 @@ const register_router = require('./routers/register_router');
 const admin_router = require('./routers/admin-router');
 const auth_userId = require('./middlewares/auth_userId_middleware');
 const User = require('./models/user_model');
+const Category = require('./models/category_model');
 
 
 // set template pug
@@ -22,13 +23,21 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(cookieParser(process.env.SECRET_COOKIE))
 
 // set file static 
+const public = express.static('public');
 app.use(express.static('public'));
+app.use('/admin', public);
+app.use('/admin/category/', public);
+app.use('/admin/category/add', public);
+app.use('/admin/category/edit/:id', public)
+app.use('/admin/category/del/:id', public)
 
 // router
 app.get('/', async (req, res) => {
-    let user = await User.find({_id: req.signedCookies.userid})
+		let user = await User.find({_id: req.signedCookies.userid})
+		let dataCategory = await Category.find();
     res.render('index', {
-        user: user[0]
+				user: user[0],
+				category: dataCategory
     });
 })
 

@@ -29,6 +29,6 @@ module.exports.auth_login = async function (req, res, next) {
     }
     res.cookie('userid', user[0]._id, {
         signed: true
-    })
+		})
     next();
 }

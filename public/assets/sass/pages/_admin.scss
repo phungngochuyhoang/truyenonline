@@ -1,9 +1,14 @@
+.list-name-hidden {
+	display: none;
+}
 .container-admin {
-    padding-left: 0;
+		padding-left: 0;
+		position: relative;
     .navbar-col-3 {
-        width: 90%;
-        background-color: $color_dark_green;
-        height: 100vh;
+				height: 100vh;
+				background-color: $color_dark_green;
+				position: fixed;
+				left: 0;
         .head {
             border-bottom: 2px solid $color-white;
             padding: 5px;
@@ -25,18 +30,26 @@
                     color: $color-white;
                     pointer-events: none;
                 }
-            }
+						}
+					.head-box-close {
+						display: flex;
+						justify-content: flex-end;
+						.fa-caret-square-left,
+						.fa-caret-square-right {
+							color: $color-white;
+						}
+					}
         }
         .body {
             padding: 8px;
             .body-categories {
-                padding: 0 20px 0 0;
+								padding: 0 20px 0 0;
                 li {
                     list-style: none;
-                    height: 50px;
+										height: 50px;
                     i {
-                        font-size: 15px;
-                        padding-right: 5px;
+												font-size: 15px;
+												width: 20px;
                     }
                     a {
                         text-decoration: none;
@@ -45,12 +58,11 @@
                         text-shadow: .1px .1px 1px;
                         line-height: 75px;
                         padding-left: 5px;
-                        color: $color-white;
+												color: $color-white;
+												.list-name {
+													padding-left: 5px;
+												}
                     }
-                }
-                li:last-child {
-                    position: absolute;
-                    bottom: 10px;
                 }
             }
         }

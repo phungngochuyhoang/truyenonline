@@ -1,0 +1,48 @@
+include ../../layout/admin_layout.pug 
+	block content 
+		.container-fluid.container-add-cat
+			.row
+				.col-lg-12.col-xl-12
+					.box-back
+						a(href="/admin/category") 
+							i.fas.fa-long-arrow-alt-left 
+							| back
+					form(action='', method='POST' id="form-add")
+						ul
+							li
+								label  T&ecirc;n th&#x1EC3; lo&#x1EA1;i 
+								input(type='text', name='add_name', autocomplete="off" class="add_name")
+							li 
+								label  Ghi chú 
+								textarea(name="note", cols="30", rows="6")
+							li
+								button(type='submit', name='' id="dialog-link")  Th&ecirc;m 
+					#dialog
+						p.text-center Bạn cần điền tên thể loại
+	include ../../layout/script.pug
+	script.
+		$("#dialog").dialog({
+			autoOpen: false,
+			width: 380,
+			height: 130,
+			position: {
+				my: "center",
+				at: "center",
+				of: window
+			},
+			buttons: [
+				{
+					text: "Cancel",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			]
+		})
+
+		$("#dialog-link").click(function( event ) {
+				if(document.getElementsByClassName('add_name')[0].value.length === 0) {
+					$( "#dialog" ).dialog( "open" );
+					event.preventDefault();
+				}
+		});
