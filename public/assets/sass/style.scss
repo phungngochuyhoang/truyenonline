@@ -12,3 +12,41 @@
     margin: 0;
     padding: 0;
 }
+.ui-widget-header {
+	border: 0; 
+  background: white; 
+  color: white; 
+  font-weight: normal;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+	display: none;
+}
+.ui-dialog .ui-dialog-title {
+	display: none;
+}
+.ui-dialog .ui-dialog-buttonpane button {
+	margin: 0;
+	outline: none;
+	font-size: 12px;
+	padding: 2px 5px;
+	border: 0;
+	width: 80px;
+	height: 25px;
+	text-shadow: .1px .1px 1px;
+	background-color: $color_white;
+	color: $color_black;
+	border-radius: 4px;
+}
+.ui-widget.ui-widget-content {
+	background-color: $color_dark_green;
+	border: 0;
+	p {
+		color: $color_white;
+		font-size: 15px;
+	}
+}
+.ui-dialog .ui-dialog-buttonpane,
+.ui-draggable .ui-dialog-titlebar {
+	background-color: $color_dark_green;
+}
+

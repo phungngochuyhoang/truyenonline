@@ -1,0 +1,51 @@
+include ../../layout/admin_layout.pug 
+	block content 
+		.container-fluid.container-admin
+			.row
+				.col-lg-2.col-xl-2#navbar-1
+					include ../../components/admin_navbar.pug
+				.col-lg-10.col-xl-10#navbar-11
+					.box-admin-category
+						.head
+							h2  Th&#x1EC3; lo&#x1EA1;i truy&#x1EC7;n 
+							.head-function
+								a(href='/admin/category/add')  Th&ecirc;m th&#x1EC3; lo&#x1EA1;i 
+								form(action="/admin/category/search?category_story" method="get")
+									input(type='text', name='category_story', placeholder='Tên loại tìm kiếm')
+									button(type='submit')
+										i.fas.fa-search
+						.body
+							table
+								thead
+									tr
+										td  ID 
+										td  T&ecirc;n th&#x1EC3; lo&#x1EA1;i 
+								tbody
+									tr
+										td(colspan='2')
+											input(type='text', name='filter-name', placeholder='Lọc truyện')
+									each value, index in data 
+										tr.item
+											td= index+1
+											td= value.name
+											td.box-function
+												a.text-secondary(href='/admin/category/edit/' + value._id)
+													i.fas.fa-pen
+													span  S&#x1EED;a 
+											td.box-function
+												a.text-danger(href='/admin/category/del/' + value._id)
+													i.fas.fa-trash
+													span  X&oacute;a 
+		include ../../layout/script.pug
+		script. 
+			var input = document.querySelector("[name='filter-name']");
+			var item = document.querySelectorAll('.item');
+			input.addEventListener('keyup', function(e) {
+				item.forEach((item) => {
+					if(item.children[1].innerHTML.toLowerCase().indexOf(input.value) !== -1 || item.children[1].innerHTML.toUpperCase().indexOf(input.value) !== -1) {
+						item.style.display = '';
+					}else {
+						item.style.display = 'none'
+					}
+				})
+			})

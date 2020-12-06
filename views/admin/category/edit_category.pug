@@ -1,0 +1,20 @@
+include ../../layout/admin_layout.pug 
+	block content 
+		.container-fluid.container-add-cat
+			.row
+				.col-lg-12.col-xl-12
+					.box-back
+						a(href="/admin/category") 
+							i.fas.fa-long-arrow-alt-left 
+							| back
+					form(action='', method='POST' id="form-add")
+						ul
+							li
+								label  T&ecirc;n th&#x1EC3; lo&#x1EA1;i 
+								input(type='text', name='edit_name', autocomplete="off", value= name)
+							li 
+								label  Ghi chú 
+								textarea(name="note", cols="30", rows="6")= note
+							li
+								button(type='submit', name='')  Sửa
+	include ../../layout/script.pug
