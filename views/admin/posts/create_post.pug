@@ -1,0 +1,94 @@
+include ../../layout/admin_layout.pug 
+	block content 
+		.container-fluid.container-add-cat
+			.row
+				.col-lg-12.col-xl-12
+					.box-back
+						a(href="/admin/post") 
+							i.fas.fa-long-arrow-alt-left 
+							| back
+					form(action='', enctype="multipart/form-data", method='POST', id="form-add")
+						ul
+							li
+								label  Tên truyện
+								input(type='text', name='add_name', autocomplete="off" class="add_name")
+							li 
+								label Thể loại truyện
+								select#categories.categories(name="categories")
+									option(selected) --- Thể loại truyện ---
+									each value in category
+										option.list-option(value= value.name)= value.name
+								input(type="text" name="result-categories" id="result-categories" class="mt-3")
+							li
+								label  T&ecirc;n tác giả
+								input(type='text', name='author', autocomplete="off" class="author")
+							li 
+								label Hình ảnh
+								.box-image 
+									input(type="file", name="avatar", class="image")
+									span.name-image
+							li 
+								label  Ghi chú 
+								textarea(name="note", cols="30", rows="6")
+							li.status
+								input(type="checkbox" name="status" class="checkbox" id="checkbox")
+								label(for="checkbox" class="checkbox-label") Trạng thái
+							li
+								button(type='submit', name='submit' id="dialog-link") Tạo
+					#dialog
+						p.text-center
+							span#text
+	include ../../layout/script.pug
+	script.
+		var strCat = [];
+		$('.categories').change((e) => {
+			strCat.push(e.target.value)
+			let result = strCat.join(', ')
+			document.getElementById('result-categories').value = result.trim();
+		})
+		$("#dialog").dialog({
+			autoOpen: false,
+			width: 380,
+			height: 130,
+			position: {
+				my: "center",
+				at: "center",
+				of: window
+			},
+			buttons: [
+				{
+					text: "Cancel",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			]
+		})
+		$('.image').change(function (event) {
+			var nameImage = document.querySelectorAll('.name-image')[0];
+			nameImage.innerHTML = event.target.value;
+		})
+		$("#dialog-link").click(function( event ) {
+			var name = document.getElementsByClassName('add_name')[0]; 
+			var author = document.getElementsByClassName('author')[0];
+			var image = document.getElementsByClassName('image')[0];
+			var textErr = document.getElementById('text');
+				if(!name.value) {
+					$("#dialog" ).dialog( "open" );
+					textErr.innerHTML= 'Bạn cần điền tên truyện';
+					event.preventDefault();
+					return;
+				}
+				if(!author.value) {
+					$("#dialog" ).dialog( "open" );
+					textErr.innerHTML= 'Bạn cần điền tên tác giả';
+					event.preventDefault();
+					return;
+				}
+				if(!image.value) {
+					$("#dialog" ).dialog( "open" );
+					textErr.innerHTML= 'Bạn cần thêm ảnh';
+					event.preventDefault();
+					return;
+				}
+		});

@@ -36,7 +36,7 @@ module.exports.auth_register = async function(req, res, next) {
         })
         return;
     }else {
-       res.redirect('login')
+			res.redirect('login')
     }
     next();
 }

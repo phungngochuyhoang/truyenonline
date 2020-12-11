@@ -1,5 +1,6 @@
 @import './base/font';
 @import './base/color';
+@import './abstracts/animation';
 @import './layouts/footer';
 @import './layouts/header';
 @import './components/navbar';
@@ -7,6 +8,7 @@
 @import './pages/home';
 @import './pages/admin';
 @import './pages/admin-category';
+@import './pages/admin-post';
 
 * {
     margin: 0;
@@ -49,4 +51,10 @@
 .ui-draggable .ui-dialog-titlebar {
 	background-color: $color_dark_green;
 }
-
+.dialog {
+	display: none;
+}
+.badge {
+	padding: 8px 10px;
+	cursor: pointer;
+}

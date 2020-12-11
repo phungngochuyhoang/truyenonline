@@ -1,0 +1,71 @@
+include ../../layout/admin_layout.pug 
+	block content 
+		.container-fluid.container-add-cat
+			.row
+				.col-lg-12.col-xl-12
+					.box-back
+						a(href="/admin/post") 
+							i.fas.fa-long-arrow-alt-left 
+							| back
+					form(action='', enctype="multipart/form-data", method='POST', id="form-add")
+						ul
+							li
+								label  Tên truyện
+								input(type='text', name='add_name', autocomplete="off" class="add_name" value= story ? story.name : '')
+							li 
+								label Thể loại truyện
+								select#categories.categories(name="categories")
+									option(selected) --- Thể loại truyện ---
+									each value in category
+										option.list-option(value= value.name)= value.name
+								input(type="text" name="result-categories" id="result-categories" class="mt-3" autocomplete="off" value= story ? story.categories_name.join(', ') : '')
+							li
+								label  T&ecirc;n tác giả
+								input(type='text', name='author', autocomplete="off" class="author" value= story ? story.author : '')
+							li 
+								label Hình ảnh
+								.box-image 
+									input(type="file", name="avatar", class="image")
+									input(type="hidden" name="avatar_edit" value=story ? story.avatar: '')
+									span.name-image= story ? story.avatar : ''
+							li 
+								label  Ghi chú 
+								textarea(name="note", cols="30", rows="6" value= story ? story.note : '')
+							li.status
+								input(type="checkbox" name="status" class="checkbox" id="checkbox")
+								label(for="checkbox" class="checkbox-label") Trạng thái
+							li.status
+								input(type="checkbox" name="statusSuccess" class="checkboxSuccess" id="checkboxSuccess")
+								label(for="checkboxSuccess" class="checkboxSuccess-label") Hoàn thành
+							li
+								input(type="hidden", id="dataid", value= story._id)
+								button(type='submit', name='submit' id="dialog-link") Tạo
+					#dialog
+						p.text-center
+							span#text
+	include ../../layout/script.pug
+	script.
+		console.log($('.image')[0].value)
+		let id = document.getElementById('dataid').value;
+		$.ajax({
+			dataType: 'json',
+			type: 'post',
+			url: 'http://localhost:3000/admin/post/data/' + id,
+		}).done(function(data) {
+			hanldeCheck(data)
+		})
+		function hanldeCheck(data) {
+			$('.checkbox')[0].checked = data[0].statusShowHide
+			$('.checkboxSuccess')[0].checked = data[0].statusFinishAndUnfinished
+		}
+		var strCat = [];
+		$('.categories').change((e) => {
+			strCat.push(e.target.value)
+			let result = strCat.join(', ')
+			document.getElementById('result-categories').value = result.trim();
+		})
+		$('.image')[0].addEventListener('change', function(e) {
+			let target = e.target;
+			$('.name-image')[0].innerHTML = target.value;
+			$('[name="avatar_edit"]')[0].value= target.value;
+		})
