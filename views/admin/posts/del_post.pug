@@ -5,11 +5,13 @@ include ../../layout/admin_layout.pug
 				.col-xl-12
 					.box-form
 						form(action="" method="post")
-							p Bạn có chắc là muốn xóa thể loại 
-								span= name
+							p Bạn có chắc là muốn xóa truyện<br>
+								span= story ? story.name : ''
 								| ?
 							ul
 								li
 									button(type="submit") Xóa
-									a(href="/admin/category") Không
+									a(href="/admin/post") Không
 		include ../../layout/script.pug
+
+

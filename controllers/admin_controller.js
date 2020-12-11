@@ -1,4 +1,15 @@
 const Category = require('../models/category_model');
+const Story = require('../models/stories_model');
+//  only one data story
+module.exports.post_data = async function (req, res) {
+	let dataStories = await Story.find({_id: req.params.id});
+	res.json(dataStories)
+}
+// data stories 
+module.exports.post_datas = async function (req, res) {
+	let dataStories = await Story.find();
+	res.json(dataStories)
+}
 // admin
 module.exports.get_admin = function (req, res) {
   res.render('admin/admin');
@@ -69,4 +80,78 @@ module.exports.get_search_category = async function (req, res) {
 		title: 'Category',
 		data: findName
 	})
+}
+// post stories
+module.exports.get_post_stories = async function (req, res) {
+	let dataStories = await Story.find();
+	res.render('admin/posts/post', {
+		stories: dataStories
+	})
+}
+// create stories
+module.exports.get_create_stories = async function (req, res) {
+	let dataCategory = await Category.find();
+	res.render('admin/posts/create_post', {
+		category: dataCategory
+	})
+}
+module.exports.post_create_stories = function (req, res) {
+	req.body.avatar = req.file.path.split('\\').slice(1).join('\\');
+	!req.body.status ? req.body.status = false : req.body.status = true;
+	req.body['result-categories'] = req.body['result-categories'].split(', ');
+	Story({
+		name: req.body.add_name,
+		author: req.body.author,
+		categories_name: req.body['result-categories'],
+		avatar: req.body.avatar,
+		note: req.body.note,
+		statusShowHide: req.body.status,
+		statusFinishAndUnfinished: false
+	}).save()
+	res.redirect('/admin/post')
+}
+// edit story
+module.exports.get_updateStory = async function (req, res) { 
+	let dataCategory = await Category.find();
+	let dataStories = await Story.find({_id: req.params.id});
+	res.render('admin/posts/edit_post', {
+		story: dataStories[0],
+		category: dataCategory
+	})
+}
+module.exports.post_updateStory = function (req, res) {
+	!req.body.status ? req.body.status = false : req.body.status = true;
+	!req.body.statusSuccess ? req.body.statusSuccess = false : req.body.statusSuccess = true;
+	let dataNew = {
+		name: req.body.add_name,
+		author: req.body.author,
+		categories: req.body['result-categories'].split(', '),
+		avatar: req.body.avatar_edit.indexOf('uploads') !== -1 ? req.body.avatar_edit : req.file.path.split('\\').slice(1).join('\\'),
+		note: req.body.note,
+		status: req.body.status,
+		statusSuccess: req.body.statusSuccess
+	}
+	Story.updateOne({_id: req.params.id}, {$set: {
+		category_name: dataNew.categories,
+		name: dataNew.name,
+		author: dataNew.author,
+		avatar: dataNew.avatar,
+		note: dataNew.note,
+		statusShowHide: dataNew.status,
+		statusFinishAndUnfinished: dataNew.statusSuccess
+	}}).then((data) => data).catch(err => err)
+	res.redirect('/admin/post')
+}
+// delete story
+module.exports.get_delStory = async function (req, res) { 
+	let dataStories = await Story.findOne({_id: req.params.id});
+	res.render('admin/posts/del_post', {
+		story: dataStories
+	});
+}
+module.exports.post_delStory = function (req, res) {
+	Story.deleteOne({_id: req.params.id})
+	.then(data => data)
+	.catch(err => err)
+	res.redirect('/admin/post')
 }

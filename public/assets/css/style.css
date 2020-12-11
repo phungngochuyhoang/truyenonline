@@ -2,6 +2,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Cabin&family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Cabin&family=Kanit:ital,wght@1,300&family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Cabin&family=Kanit:ital,wght@1,300&family=Roboto&family=Signika:wght@300&display=swap");
+@-webkit-keyframes circular {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  80%, 100% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+}
+@keyframes circular {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  80%, 100% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+}
+
 .container-header {
   border: 1px solid #164A41;
 }
@@ -495,7 +516,7 @@
   font-size: 14px;
   padding: 8px 10px;
   width: 5%;
-  border: 1px solid;
+  border: 1px solid #cccccc;
 }
 
 .box-admin-category .body table thead tr td:nth-child(2) {
@@ -505,7 +526,7 @@
 
 .box-admin-category .body table tbody tr:nth-child(1) td {
   height: 40px;
-  border: 1px solid;
+  border: 1px solid #cccccc;
 }
 
 .box-admin-category .body table tbody tr:nth-child(1) td input[type="text"] {
@@ -542,11 +563,11 @@
 }
 
 .box-admin-category .body table tbody tr td {
-  border-bottom: 1px solid #164A41;
+  border-bottom: 1px solid #cccccc;
 }
 
 .container-add-cat {
-  background: url("../img/s3.png") no-repeat;
+  background: url("") no-repeat;
   background-size: cover;
   height: 100vh;
 }
@@ -572,7 +593,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 50vh;
+  height: 20vh;
 }
 
 .container-add-cat #form-add ul {
@@ -613,6 +634,14 @@
   outline: none;
 }
 
+.container-add-cat #form-add ul li .categories {
+  border: 3px solid #164A41;
+  border-radius: 5px;
+  padding: 2.5px;
+  font-size: 14px;
+  color: #164A41;
+}
+
 .container-add-cat #form-add ul li textarea[name="note"] {
   border: 3px solid #164A41;
   resize: none;
@@ -621,6 +650,7 @@
   letter-spacing: 1px;
   text-shadow: .2px .2px 1px;
   border-radius: 5px;
+  outline: none;
 }
 
 .container-add-cat #form-add ul li button[type="submit"] {
@@ -641,6 +671,77 @@
 .container-add-cat #form-add ul li:last-child button[type="submit"] {
   -ms-flex-item-align: end;
       align-self: flex-end;
+}
+
+.container-add-cat #form-add ul .status {
+  position: relative;
+  width: 30px;
+  left: 75px;
+}
+
+.container-add-cat #form-add ul .status .checkbox, .container-add-cat #form-add ul .status .checkboxSuccess {
+  display: none;
+}
+
+.container-add-cat #form-add ul .status .checkbox-label, .container-add-cat #form-add ul .status .checkboxSuccess-label {
+  display: block;
+  width: 100px;
+  height: 15px;
+  text-indent: -80%;
+}
+
+.container-add-cat #form-add ul .status .checkbox-label::before,
+.container-add-cat #form-add ul .status .checkbox-label::after,
+.container-add-cat #form-add ul .status .checkboxSuccess-label::before,
+.container-add-cat #form-add ul .status .checkboxSuccess-label::after {
+  content: "";
+  display: block;
+  position: absolute;
+  cursor: pointer;
+}
+
+.container-add-cat #form-add ul .status .checkbox-label::before,
+.container-add-cat #form-add ul .status .checkboxSuccess-label::before {
+  width: 100%;
+  height: 100%;
+  background-color: #164A41;
+  opacity: .3;
+  margin-top: 3px;
+  border-radius: 9999em;
+  -webkit-transition: background-color 0.25s ease;
+  transition: background-color 0.25s ease;
+}
+
+.container-add-cat #form-add ul .status .checkbox-label::after,
+.container-add-cat #form-add ul .status .checkboxSuccess-label::after {
+  top: 3px;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #fff;
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
+          box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
+  -webkit-transition: left 0.25s ease;
+  transition: left 0.25s ease;
+}
+
+.container-add-cat #form-add ul .status .checkbox:checked + .checkbox-label::before {
+  background-color: #164A41;
+  opacity: 1;
+}
+
+.container-add-cat #form-add ul .status .checkbox:checked + .checkbox-label::after {
+  left: 22px;
+}
+
+.container-add-cat #form-add ul .status .checkboxSuccess:checked + .checkboxSuccess-label::before {
+  background-color: #164A41;
+  opacity: 1;
+}
+
+.container-add-cat #form-add ul .status .checkboxSuccess:checked + .checkboxSuccess-label::after {
+  left: 22px;
 }
 
 .container-category-del {
@@ -727,6 +828,276 @@
   opacity: .9;
 }
 
+.box-admin-post .head {
+  padding-top: 10px;
+}
+
+.box-admin-post .head h2 {
+  text-transform: capitalize;
+  font-size: 30px;
+  color: #164A41;
+  padding: 10px 0 20px;
+}
+
+.box-admin-post .head .head-function {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 10px 0;
+  position: relative;
+}
+
+.box-admin-post .head .head-function a {
+  border: 1px solid;
+  padding: 5px 20px;
+  text-decoration: none;
+  border-radius: 2px;
+  font-size: 14px;
+  background-color: #164A41;
+  color: #FFFFFF;
+}
+
+.box-admin-post .head .head-function form {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  margin-left: 100px;
+  position: relative;
+  border: 1px solid #164A41;
+  border-radius: 2px;
+}
+
+.box-admin-post .head .head-function form input[type="text"] {
+  font-size: 13px;
+  font-family: "Kanit", sans-serif;
+  letter-spacing: 1px;
+  width: 300px;
+  height: 30px;
+  text-indent: 8px;
+  outline: none;
+  border: 0;
+}
+
+.box-admin-post .head .head-function form button {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  font-size: 14px;
+  color: #164A41;
+  outline: none;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.box-admin-post .body table {
+  width: 100%;
+  position: relative;
+  text-align: center;
+  font-size: 14px;
+}
+
+.box-admin-post .body table thead tr:nth-child(1) td {
+  border: 1px solid #cccccc;
+  padding: 10px 0;
+  text-shadow: 0.1px 0.1px 1px #164A41;
+  color: #164A41;
+}
+
+.box-admin-post .body table thead tr:nth-child(1) td:nth-child(1) {
+  width: 5%;
+}
+
+.box-admin-post .body table thead tr:nth-child(1) td:nth-child(2) {
+  width: 25%;
+}
+
+.box-admin-post .body table thead tr:nth-child(1) td:nth-child(3) {
+  width: 15%;
+}
+
+.box-admin-post .body table thead tr:nth-child(1) td:nth-child(4) {
+  width: 15%;
+}
+
+.box-admin-post .body table thead tr:nth-child(1) td:nth-child(5) {
+  width: 15%;
+}
+
+.box-admin-post .body table thead tr:nth-child(1) td:nth-child(6) {
+  width: 10%;
+}
+
+.box-admin-post .body table thead tr:nth-child(1) td:nth-child(7) {
+  width: 20%;
+}
+
+.box-admin-post .body table thead tr:nth-child(2) td {
+  position: relative;
+  border: 1px solid #cccccc;
+  height: 40px;
+}
+
+.box-admin-post .body table thead tr:nth-child(2) td input[type="text"] {
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: center;
+  text-shadow: 0.1px 0.1px 1px #164A41;
+  color: #164A41;
+  letter-spacing: 1px;
+  font-style: italic;
+}
+
+.box-admin-post .body table tbody tr td {
+  border-bottom: 1px solid #cccccc;
+  padding: 10px 0;
+  text-shadow: .1px .1px 1px;
+  color: #164A41;
+  text-transform: capitalize;
+}
+
+.box-admin-post .body table tbody tr td:nth-child(1) {
+  width: 5%;
+}
+
+.box-admin-post .body table tbody tr td:nth-child(2) {
+  width: 25%;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.box-admin-post .body table tbody tr td:nth-child(3) {
+  width: 15%;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.box-admin-post .body table tbody tr td:nth-child(4) {
+  width: 15%;
+}
+
+.box-admin-post .body table tbody tr td:nth-child(5) {
+  width: 15%;
+}
+
+.box-admin-post .body table tbody tr td:nth-child(6) {
+  width: 10%;
+}
+
+.box-admin-post .body table tbody tr td:nth-child(7) {
+  width: 20%;
+}
+
+.box-admin-post .body table tbody tr td:nth-child(7) a {
+  display: inline-block;
+  width: 55px;
+  height: 20px;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.box-admin-post .body #pagination-container {
+  margin: 40px 0 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding-right: 15em;
+}
+
+.container-add-cat .box-image {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.container-add-cat .box-image .name-image {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  font-size: 15px;
+  color: #164A41;
+  text-shadow: 0.1px 0.1px 1px #164A41;
+  font-style: italic;
+}
+
+.container-add-cat .image {
+  visibility: hidden;
+  width: 120px;
+  height: calc(30px + 2px);
+}
+
+.container-add-cat .image::before {
+  content: "Add Avatar";
+  font-size: 12px;
+  visibility: visible;
+  border: 3px solid #164A41;
+  width: 100px;
+  height: 30px;
+  display: block;
+  text-align: center;
+  line-height: 25px;
+  border-radius: 5px;
+  background-color: #164A41;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+#result-categories {
+  text-shadow: none;
+}
+
+.box-loading {
+  position: absolute;
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  z-index: 99;
+}
+
+.box-loading .loader {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.box-loading .loader span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transform: rotate(calc(18deg * var(--i)));
+          transform: rotate(calc(18deg * var(--i)));
+}
+
+.box-loading .loader span::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #164A41;
+  -webkit-box-shadow: 0 0 10px #164A41, 0 0 20px #164A41, 0 0 40px #164A41, 0 0 60px #164A41, 0 0 80px #164A41, 0 0 100px #164A41;
+          box-shadow: 0 0 10px #164A41, 0 0 20px #164A41, 0 0 40px #164A41, 0 0 60px #164A41, 0 0 80px #164A41, 0 0 100px #164A41;
+  -webkit-animation: circular 2s linear infinite;
+          animation: circular 2s linear infinite;
+  -webkit-animation-delay: calc(0.1s * var(--i));
+          animation-delay: calc(0.1s * var(--i));
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -774,5 +1145,14 @@
 .ui-dialog .ui-dialog-buttonpane,
 .ui-draggable .ui-dialog-titlebar {
   background-color: #164A41;
+}
+
+.dialog {
+  display: none;
+}
+
+.badge {
+  padding: 8px 10px;
+  cursor: pointer;
 }
 /*# sourceMappingURL=style.css.map */

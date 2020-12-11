@@ -13,23 +13,26 @@ const auth_userId = require('./middlewares/auth_userId_middleware');
 const User = require('./models/user_model');
 const Category = require('./models/category_model');
 
-
-// set template pug
-app.set('view engine', 'pug');
-
 // set middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cookieParser(process.env.SECRET_COOKIE))
 
+// set template pug
+app.set('view engine', 'pug');
+
 // set file static 
 const public = express.static('public');
-app.use(express.static('public'));
+app.use(public);
 app.use('/admin', public);
 app.use('/admin/category/', public);
 app.use('/admin/category/add', public);
 app.use('/admin/category/edit/:id', public)
 app.use('/admin/category/del/:id', public)
+app.use('/admin/post', public)
+app.use('/admin/post/edit', public)
+app.use('/admin/post/del', public)
+app.use('/admin/post/del/:id', public)
 
 // router
 app.get('/', async (req, res) => {

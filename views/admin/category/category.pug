@@ -11,7 +11,7 @@ include ../../layout/admin_layout.pug
 							.head-function
 								a(href='/admin/category/add')  Th&ecirc;m th&#x1EC3; lo&#x1EA1;i 
 								form(action="/admin/category/search?category_story" method="get")
-									input(type='text', name='category_story', placeholder='Tên loại tìm kiếm')
+									input(type='text', name='category_story', placeholder='Tên loại tìm kiếm', autocomplete="off")
 									button(type='submit')
 										i.fas.fa-search
 						.body
@@ -42,7 +42,7 @@ include ../../layout/admin_layout.pug
 			var item = document.querySelectorAll('.item');
 			input.addEventListener('keyup', function(e) {
 				item.forEach((item) => {
-					if(item.children[1].innerHTML.toLowerCase().indexOf(input.value) !== -1 || item.children[1].innerHTML.toUpperCase().indexOf(input.value) !== -1) {
+					if(item.children[1].innerHTML.toLowerCase().indexOf(input.value) !== -1 || item.children[1].innerHTML.toUpperCase().indexOf(input.value) !== -1 || item.children[1].innerHTML.indexOf(input.value) !== -1) {
 						item.style.display = '';
 					}else {
 						item.style.display = 'none'

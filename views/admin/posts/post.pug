@@ -1,0 +1,116 @@
+include ../../layout/admin_layout.pug
+block content 
+	body(onload="script();")
+		.box-loading
+			.loader
+				span(style="--i:1;")
+				span(style="--i:2;")
+				span(style="--i:3;")
+				span(style="--i:4;")
+				span(style="--i:5;")
+				span(style="--i:6;")
+				span(style="--i:7;")
+				span(style="--i:8;")
+				span(style="--i:8;")
+				span(style="--i:9;")
+				span(style="--i:10;")
+				span(style="--i:11;")
+				span(style="--i:12;")
+				span(style="--i:13;")
+				span(style="--i:14;")
+				span(style="--i:15;")
+				span(style="--i:16;")
+				span(style="--i:17;")
+				span(style="--i:18;")
+				span(style="--i:19;")
+				span(style="--i:20;")
+		.container-fluid.container-admin
+			.row
+				.col-lg-2.col-xl-2#navbar-1
+					include ../../components/admin_navbar.pug
+				.col-lg-10.col-xl-10#navbar-11
+					.box-admin-post
+						.head
+							h2 Đăng truyện
+							.head-function
+								a(href='/admin/post/create')  Tạo truyện
+						.body
+							table
+								thead
+									tr
+										td  ID 
+										td  T&ecirc;n truy&#x1EC7;n 
+										td  T&aacute;c gi&#x1EA3; 
+										td  Ng&agrave;y t&#x1EA1;o
+										td 	Hoàn thành
+										td  Trạng thái
+									tr
+										td(colspan='6')
+											input(type='text', name='filter-name', placeholder='Lọc truyện') 
+								tbody#data-container
+							<div id="pagination-container"></div>
+		include ../../layout/script.pug
+		script. 
+			window.onload = function(e) {
+				if(Math.floor(e.timeStamp) < 3000) {
+					$('#data-container').hide()
+					$('#pagination-container').hide()
+					$('.box-loading').show()
+					setTimeout(function() {
+						$('#data-container').show()
+						$('.box-loading').hide()
+						var item = document.querySelectorAll('.item');
+						if(item.length > 20) {
+							$('#pagination-container').show()
+						}
+						var input = document.querySelector("[name='filter-name']");
+						input.addEventListener('keyup', function(e) {
+							item.forEach((item) => {
+								if(item.children[1].innerHTML.indexOf(input.value) !== -1) {
+									item.style.display = '';
+								}else {
+									item.style.display = 'none'
+								}
+							})
+						})
+					}, Math.floor(e.timeStamp))
+				}
+			}
+			$.ajax({
+				dataType: 'json',
+				type: 'post',
+				url: 'http://localhost:3000/admin/post/data',
+				}).done(function(data) {
+					hanldeCheck(data)
+			})
+			function hanldeCheck(datas) {
+				function simpleTemplating(data) {
+					var html;
+					$.each(data, function(index, item){
+							html += `<tr class="item">
+												<td> ${index + 1} </td>
+												<td> ${item.name} </td>
+												<td> ${item.author} </td>
+												<td> ${new Date(item.createDay).getDate()}-${new Date(item.createDay).getMonth() + 1}-${new Date(item.createDay).getFullYear()} ${new Date(item.createDay).getHours()}:${new Date(item.createDay).getMinutes()}${new Date(item.createDay).getHours() < 12 ? 'AM' : 'PM'}</td>
+												<td>
+													${item.statusFinishAndUnfinished ? "<span class='badge badge-success'> Hoàn thành </span>" : "<span class='badge badge-danger'> Chưa hoàn thành </span>"}
+												</td>
+												<td> 
+													${item.statusShowHide ? "<span class='badge badge-success'> Hiện </span>" : "<span class='badge badge-danger'> Ẩn </span>"}
+												</td>
+												<td> 
+													<a href='/admin/post/edit/${item._id}' class="text-secondary"><i class="fas fa-pen"></i> Sửa </a>
+													<a href="/admin/post/del/${item._id}" class="text-danger"><i class="fas fa-trash"></i> Xóa </a>
+												</td>
+											</tr>`;
+						});
+						return html;
+					}
+					$('#pagination-container').pagination({
+						dataSource: datas,
+						callback: function(data, pagination) {
+								var html = simpleTemplating(data);
+								$('#data-container').html(html);
+						}
+				})
+			}	

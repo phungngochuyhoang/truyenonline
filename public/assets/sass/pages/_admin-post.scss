@@ -1,0 +1,231 @@
+.box-admin-post{
+	.head {
+		padding-top: 10px;
+		h2 {
+			text-transform: capitalize;
+			font-size: 30px;
+			color: $color_dark-green;
+			padding: 10px 0 20px;
+		}
+		.head-function {
+			display: flex;
+			padding: 10px 0;
+			position: relative;
+				a {
+					border: 1px solid;
+					padding: 5px 20px;
+					text-decoration: none;
+					border-radius: 2px;
+					font-size: 14px;
+					background-color: $color_dark_green;
+					color: $color_white;
+				}
+				form {
+					align-self: flex-end;
+					margin-left: 100px;
+					position: relative;
+					border: 1px solid $color_dark-green;
+					border-radius: 2px;
+					input[type="text"] {
+							font-size: 13px;
+							font-family: $font-kanit;
+							letter-spacing: 1px;
+							width: 300px;
+							height: 30px;
+							text-indent: 8px;
+							outline: none;
+							border: 0;
+					}
+					button {
+							position: absolute;
+							right: 4px;
+							top: 4px;
+							font-size: 14px;
+							color: $color_dark-green;
+							outline: none;
+							border: 0;
+							background-color: transparent;
+							cursor: pointer;
+					}
+				}
+	}
+}
+}
+.box-admin-post{
+.body {
+	table {
+		width: 100%;
+		position: relative;
+		text-align: center;
+		font-size: 14px;
+		thead tr:nth-child(1){
+			td {
+				border: 1px solid #cccccc;
+				padding: 10px 0;
+				text-shadow: .1px .1px 1px $color_dark-green;
+				color: $color_dark-green;
+			}
+			td:nth-child(1) {
+				width: 5%;
+			}
+			td:nth-child(2) {
+				width: 25%;
+			}
+			td:nth-child(3) {
+				width: 15%;
+			}
+			td:nth-child(4) {
+				width: 15%;
+			}
+			td:nth-child(5) {
+				width: 15%;
+			}
+			td:nth-child(6) {
+				width: 10%;
+			}
+			td:nth-child(7) {
+				width: 20%;
+			}
+		}
+		thead tr:nth-child(2) {
+			td {
+				position: relative;
+				border: 1px solid #cccccc;
+				height: 40px;
+				input[type="text"] {
+					width: 100%;
+					border: none;
+					outline: none;
+					text-align: center;
+					text-shadow: .1px .1px 1px $color_dark-green;
+					color: $color_dark-green;
+					letter-spacing: 1px;
+					font-style: italic;
+				}
+			}
+		}
+		tbody tr {
+			td {
+				border-bottom: 1px solid #cccccc;
+				padding: 10px 0;
+				text-shadow: .1px .1px 1px;
+				color: $color_dark-green;
+				text-transform: capitalize;
+			}
+			td:nth-child(1) {
+				width: 5%;
+			}
+			td:nth-child(2) {
+				width: 25%;
+				text-align: left;
+				padding-left: 20px;
+			}
+			td:nth-child(3) {
+				width: 15%;
+				text-align: left;
+				padding-left: 20px;
+			}
+			td:nth-child(4) {
+				width: 15%;
+			}
+			td:nth-child(5) {
+				width: 15%;
+			}
+			td:nth-child(6) {
+				width: 10%;
+			}
+			td:nth-child(7) {
+				width: 20%;
+				a {
+					display: inline-block;
+					width: 55px;
+					height: 20px;
+					font-size: 14px;
+					text-decoration: none;
+				}
+			}
+		}
+	}
+	#pagination-container {
+		margin: 40px 0 10px;
+		display: flex;
+		justify-content: flex-end;
+		padding-right: 15em;
+	}
+}
+}
+.container-add-cat {
+	.box-image {
+		display: flex;
+		.name-image {
+			align-self: center;
+			font-size: 15px;
+			color: $color_dark_green;
+			text-shadow: .1px .1px 1px $color_dark_green;
+			font-style: italic;
+		}
+	}
+	.image {
+		visibility: hidden;
+		width: 120px;
+    height: calc(30px + 2px);
+	}
+	.image::before {
+		content: "Add Avatar";
+		font-size: 12px;
+    visibility: visible;
+    border: 3px solid $color_dark_green;
+    width: 100px;
+    height: 30px;
+    display: block;
+    text-align: center;
+    line-height: 25px;
+		border-radius: 5px;
+		background-color: $color_dark_green;
+		color: $color_white;
+		cursor: pointer;
+	}
+}
+#result-categories {
+	text-shadow: none;
+}
+.box-loading {
+	position: absolute;
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 99;
+	.loader {
+		position: relative;
+		width: 80px;
+		height: 80px;
+		span {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			transform: rotate(calc(18deg * var(--i)));
+		}
+		span::before{
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 15px;
+			height: 15px;
+			border-radius: 50%;
+			background-color: $color_dark-green;
+			box-shadow: 0 0 10px $color_dark-green,
+									0 0 20px $color_dark-green,
+									0 0 40px $color_dark-green,
+									0 0 60px $color_dark-green,
+									0 0 80px $color_dark-green,
+									0 0 100px $color_dark-green;
+			animation: circular 2s linear infinite;
+			animation-delay: calc(0.1s * var(--i));
+		}
+	}
+}
