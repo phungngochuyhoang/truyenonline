@@ -1,5 +1,7 @@
 include layout/user_layout.pug
-    
+block content
+	include ./components/user_navbar.pug
+	
 include layout/script.pug
 script. 
 	var list = document.querySelectorAll('.list');

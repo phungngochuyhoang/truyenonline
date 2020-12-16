@@ -1,29 +1,37 @@
 include layout/user_layout.pug
-.container-fluid.container-login
-  .row
-    .col-md-2.col-lg-2.col-xl-2
-      .box-decorate
-        .element-decorate
-          img(src='./assets/img/bamboo.png', alt='')
-    .col-md-8.col-lg-8.col-xl-8
-      .box-form
-        .head-form
-          h2  &Dstrok;&abreve;ng K&yacute; 
-        .body-form
-          form(action="" method="POST")
-            .box-input
-              input.input-effect-username(type='text', name='username', placeholder='Tên đăng nhập', autocomplete='off', value= value ? value.username:'')
-              label#username  T&ecirc;n &dstrok;&abreve;ng nh&#x1EAD;p 
-            .box-input
-              input.input-effect-email(type='text', name='email', placeholder='Email', autocomplete='off', value= value ? value.email : '')
-              label#email  Email 
-            .box-input
-              input.input-effect-password(type='password', name='password', placeholder='Mật khẩu', value='')
-              label#password  M&#x1EAD;t kh&#x1EA9;u 
-            .box-input
-              input.input-effect-password-retype(type='password', name='password-retype', placeholder='Nhập lại mật khẩu', value='')
-              label#password-retype  Nh&#x1EAD;p l&#x1EA1;i m&#x1EAD;t kh&#x1EA9;u 
-            .box-input
-              span.error= err ? err[0] : '' 
-              input(type='submit', name='btn-submit', value='Đăng Ký')
-include layout/script.pug
+block content
+	include ./components/user_navbar.pug
+	.container-fluid.container-login
+		.row
+			.col-md-2.col-lg-2.col-xl-2
+				.box-decorate
+					.element-decorate
+						img(src='./assets/img/bamboo.png', alt='')
+			.col-md-8.col-lg-8.col-xl-8
+				.box-form
+					.head-form
+						h2  &Dstrok;&abreve;ng K&yacute; 
+					.body-form
+						form(action="" method="POST")
+							.box-input
+								input.input-effect-username(type='text', name='username', placeholder='Tên đăng nhập', autocomplete='off', value= value ? value.username:'')
+								label#username  T&ecirc;n &dstrok;&abreve;ng nh&#x1EAD;p 
+							.box-input
+								input.input-effect-email(type='text', name='email', placeholder='Email', autocomplete='off', value= value ? value.email : '')
+								label#email  Email 
+							.box-input
+								input.input-effect-password(type='password', name='password', placeholder='Mật khẩu', value='')
+								label#password  M&#x1EAD;t kh&#x1EA9;u 
+							.box-input
+								input.input-effect-password-retype(type='password', name='password-retype', placeholder='Nhập lại mật khẩu', value='')
+								label#password-retype  Nh&#x1EAD;p l&#x1EA1;i m&#x1EAD;t kh&#x1EA9;u 
+							.box-input
+								span.error= err ? err[0] : '' 
+								input(type='submit', name='btn-submit', value='Đăng Ký')
+	include layout/script.pug
+	script. 
+		var list = document.querySelectorAll('.list');
+		list.forEach(item => {
+			var name = xoa_dau(item.innerHTML);
+			item.setAttribute('href',`/${name}`)
+		})

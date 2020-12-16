@@ -29,16 +29,26 @@ router.post('/category/del/:id', controllers.post_delCategory)
 router.get('/category/search', controllers.get_search_category)
 // post stories
 router.get('/post', controllers.get_post_stories)
-// create stories
+// create post stories
 router.get('/post/create', controllers.get_create_stories)
 router.post('/post/create', upload, controllers.post_create_stories)
-// edit stories
+// edit post stories
 router.get('/post/edit/:id', controllers.get_updateStory)
 router.post('/post/edit/:id', upload, controllers.post_updateStory)
-// delete story
+// delete post story
 router.get('/post/del/:id', controllers.get_delStory)
 router.post('/post/del/:id', controllers.post_delStory)
-
+// chapter story
+router.get('/chapter/:id', controllers.get_chapters)
+// new chapters
+router.get('/chapter/:id/new', controllers.get_newChapter)
+router.post('/chapter/:id/new', controllers.post_newChapter)
+// edit chapter
+router.get('/chapter/:id/edit', controllers.get_editChapter)
+router.post('/chapter/:id/edit', controllers.post_editChapter)
+// delete chapter
+router.get('/chapter/:id/del', controllers.get_delChapter)
+router.post('/chapter/:id/del', controllers.post_delChapter)
 
 // data story
 router.post('/post/data/:id', controllers.post_data)

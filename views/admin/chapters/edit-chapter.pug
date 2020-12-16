@@ -1,0 +1,31 @@
+include ../../layout/admin_layout.pug 
+	block content 
+		.container-fluid.container-chapter
+			.row
+				.col-xl-12 
+					.box-new 
+						.head
+							a(href="/admin/chapter/" + data.id_story)
+								i.fas.fa-long-arrow-alt-left.pr-1
+								| Back
+						.body
+							form(action='' method='post')
+								.box-input
+									label tên chương
+									input(type="text" name="name-chapter" value= data ? data.name : '')
+								.box-input
+									textarea#editor(name='content')= data ? data.content : ''
+								.box-input
+										input(type='submit' value='Submit')
+		include ../../layout/script.pug
+		script. 
+			ClassicEditor
+				.create( document.querySelector( '#editor' ), {
+					toolbar: [ 'bold', 'italic' ]
+				} )
+					.then( editor => {
+						console.log( editor );
+					} )
+					.catch( error => {
+						console.error( error );
+					} );

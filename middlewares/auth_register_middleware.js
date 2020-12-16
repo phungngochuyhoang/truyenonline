@@ -1,5 +1,6 @@
 
 const User = require('../models/user_model');
+const Category = require('../models/category_model');
 
 module.exports.auth_register = async function(req, res, next) {
     let error = [];
@@ -29,10 +30,12 @@ module.exports.auth_register = async function(req, res, next) {
         error.push('Password không hợp lệ')
     }
     // result 
+		let dataCategory = await Category.find();
     if(error.length > 0) {
         res.render('register', {
             err: error,
-            value: req.body           
+						value: req.body,
+						category: dataCategory        
         })
         return;
     }else {
