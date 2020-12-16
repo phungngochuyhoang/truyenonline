@@ -1,0 +1,33 @@
+include ../../layout/admin_layout.pug 
+	block content 
+		.container-fluid.container-admin
+			.row
+				.col-lg-2.col-xl-2#navbar-1
+					include ../../components/admin_navbar.pug
+				.col-lg-10.col-xl-10#navbar-11
+					.box-chapter
+						.head
+							a(href="/admin/post").back 
+								i.fas.fa-long-arrow-alt-left
+								|Back 
+							a(href=`/admin/chapter/${id}/new`).create-chapter Tạo chương
+						.body
+							table
+								thead
+									tr
+										td Chương
+									tr
+										td
+											input(type="text" id="" placeholder="Lọc truyện")
+								tbody
+									each value, index in data 
+										tr
+											td= `Chương ${index + 1}: ${value.name}`
+											td 
+												a(href=`/admin/chapter/${value._id}/edit`).mr-4.text-secondary
+													i.fas.fa-pen.pr-1
+													| Sửa
+												a(href=`/admin/chapter/${value._id}/del`).text-danger
+													i.fas.fa-trash.pr-1
+													| Xóa
+		include ../../layout/script.pug

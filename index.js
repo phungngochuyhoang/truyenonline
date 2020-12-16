@@ -33,6 +33,8 @@ app.use('/admin/post', public)
 app.use('/admin/post/edit', public)
 app.use('/admin/post/del', public)
 app.use('/admin/post/del/:id', public)
+app.use('/admin/chapter', public)
+app.use('/admin/chapter/:id', public)
 
 // router
 app.get('/', async (req, res) => {

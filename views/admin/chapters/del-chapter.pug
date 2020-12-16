@@ -1,0 +1,17 @@
+include ../../layout/admin_layout.pug 
+	block content 
+		.container-fluid.container-category-del
+			.row
+				.col-xl-12
+					.box-form
+						form(action="" method="post")
+							p Bạn có chắc là muốn xóa truyện<br>
+								span= data ? data.name : ''
+								| ?
+							ul
+								li
+									button(type="submit") Xóa
+									a(href="/admin/chapter/" + data.id_story) Không
+		include ../../layout/script.pug
+
+

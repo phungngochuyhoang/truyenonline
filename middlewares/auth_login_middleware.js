@@ -1,6 +1,7 @@
 const md5 = require('md5');
 
 const User = require('../models/user_model');
+const Category = require('../models/category_model');
 
 module.exports.auth_login = async function (req, res, next) {
     let username = req.body.username;
@@ -20,10 +21,12 @@ module.exports.auth_login = async function (req, res, next) {
         }   
     }
     // result 
+		let dataCategory = await Category.find();
     if(error.length > 0) {
         res.render('login', {
             err: error,
-            value: req.body 
+						value: req.body,
+						category: dataCategory
         });
         return;
     }

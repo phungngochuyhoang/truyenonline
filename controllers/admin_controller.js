@@ -1,5 +1,6 @@
 const Category = require('../models/category_model');
 const Story = require('../models/stories_model');
+const Chapter = require('../models/chapter_model');
 //  only one data story
 module.exports.post_data = async function (req, res) {
 	let dataStories = await Story.find({_id: req.params.id});
@@ -64,7 +65,7 @@ module.exports.get_delCategory = async function (req, res) {
 		name: category[0].name
 	})
 }
-module.exports.post_delCategory = function (req, res) {
+module.exports.post_delCategory =  function (req, res) {
 	Category.deleteOne({_id: req.params.id})
 	.then(data => data)
 	.catch(err => err)
@@ -81,14 +82,14 @@ module.exports.get_search_category = async function (req, res) {
 		data: findName
 	})
 }
-// post stories
+// post post stories
 module.exports.get_post_stories = async function (req, res) {
 	let dataStories = await Story.find();
 	res.render('admin/posts/post', {
 		stories: dataStories
 	})
 }
-// create stories
+// create post stories
 module.exports.get_create_stories = async function (req, res) {
 	let dataCategory = await Category.find();
 	res.render('admin/posts/create_post', {
@@ -110,7 +111,7 @@ module.exports.post_create_stories = function (req, res) {
 	}).save()
 	res.redirect('/admin/post')
 }
-// edit story
+// edit post story
 module.exports.get_updateStory = async function (req, res) { 
 	let dataCategory = await Category.find();
 	let dataStories = await Story.find({_id: req.params.id});
@@ -142,7 +143,7 @@ module.exports.post_updateStory = function (req, res) {
 	}}).then((data) => data).catch(err => err)
 	res.redirect('/admin/post')
 }
-// delete story
+// delete post story
 module.exports.get_delStory = async function (req, res) { 
 	let dataStories = await Story.findOne({_id: req.params.id});
 	res.render('admin/posts/del_post', {
@@ -151,7 +152,68 @@ module.exports.get_delStory = async function (req, res) {
 }
 module.exports.post_delStory = function (req, res) {
 	Story.deleteOne({_id: req.params.id})
-	.then(data => data)
+	.then(data => {
+		if(data.ok) {
+			Chapter.deleteMany({id_story: req.params.id})
+			.then(data => data)
+			.catch(err => err)
+		}
+	})
 	.catch(err => err)
 	res.redirect('/admin/post')
 }
+// chapter story
+module.exports.get_chapters = async function (req, res) {
+	let chapters = await Chapter.find({id_story: req.params.id});
+	res.render('admin/chapters/chapter', {
+		id: req.params.id,
+		data: chapters
+	})
+}
+// create chapter
+module.exports.get_newChapter = function (req, res) {
+	res.render('admin/chapters/new-chapters', {
+		id: req.params.id,
+	})
+}
+module.exports.post_newChapter = function (req, res) {
+	Chapter({
+		id_story: req.params.id,
+		name: req.body['name-chapter'],
+		content: req.body.content
+	}).save()
+	res.redirect('/admin/chapter/' + req.params.id)
+}
+
+// edit chapter
+module.exports.get_editChapter = async function (req, res) {
+	let chapter = await Chapter.find({_id: req.params.id});
+	res.render('admin/chapters/edit-chapter', {
+		data: chapter[0]
+	})
+}
+module.exports.post_editChapter = async function (req, res) {
+	let chapter = await Chapter.find({_id: req.params.id});
+	let id = chapter[0].id_story;
+	Chapter.updateOne({_id: req.params.id}, {$set: {
+		name: req.body['name-chapter'],
+		content: req.body.content
+	}}).then((data) => data).catch(err => err)
+	res.redirect('/admin/chapter/' + id)
+}
+// delete chapter
+module.exports.get_delChapter = async function (req, res) {
+	let chapter = await Chapter.find({_id: req.params.id});
+	res.render('admin/chapters/del-chapter', {
+		data: chapter[0],
+	})
+}
+module.exports.post_delChapter = async function (req, res) {
+	let chapter = await Chapter.find({_id: req.params.id});
+	let id = chapter[0].id_story;
+	Chapter.deleteOne({_id: req.params.id})
+	.then(data => data)
+	.catch(err => err)
+	res.redirect('/admin/chapter/' + id)
+}
+

@@ -30,7 +30,7 @@ include ../../layout/admin_layout.pug
 									span.name-image= story ? story.avatar : ''
 							li 
 								label  Ghi chú 
-								textarea(name="note", cols="30", rows="6" value= story ? story.note : '')
+								textarea(name="note", cols="30", rows="6" )= story ? story.note : '' 
 							li.status
 								input(type="checkbox" name="status" class="checkbox" id="checkbox")
 								label(for="checkbox" class="checkbox-label") Trạng thái
