@@ -1,0 +1,48 @@
+include ../../layout/admin_layout.pug 
+	block content 
+		.container-fluid.container-add-cat
+			.row
+				.col-lg-12.col-xl-12
+					.box-back
+						a(href="/admin/users") 
+							i.fas.fa-long-arrow-alt-left 
+							| back
+					form(action='', enctype="multipart/form-data", method='POST', id="form-add")
+						ul
+							each data in user
+								li
+									label  Tên người dùng
+									input(type='text', name='username', autocomplete="off" class="add_name", value=data.username)
+								li
+									label Mật khẩu 
+									input(type='password', name='password', autocomplete="off" class="password" value=data.password)
+								li
+									label Email
+									input(type="text", name="email", autocomplete="off" class="email" value=data.email)
+								li 
+									label Hình ảnh
+									.box-image 
+										input(type="file", name="avatar", class="image")
+										input(type="hidden" name="avatar_edit" value=data ? data.avatar: '')
+										span.name-image= data ? data.avatar : ''
+								li 
+									label Phân quyền
+									select#categories.categories.role(name="role")
+										option.list-option(value="0") User
+										option.list-option(value="1") Manager 
+										option.list-option(value="2") Admin 
+									input(type="hidden", id="role" value=data.role)
+								li.mt-4
+									button(type='submit', name='submit' id="dialog-link") Tạo
+					#dialog
+						p.text-center
+							span#text
+	include ../../layout/script.pug
+	script.
+		let selectedValue = document.getElementById("role");
+		let categories = document.getElementsByClassName("categories");
+		categories[0].children[selectedValue.value].setAttribute("selected","")
+		$('.image').change(function (event) {
+			var nameImage = document.querySelectorAll('.name-image')[0];
+			nameImage.innerHTML = event.target.value;
+		})

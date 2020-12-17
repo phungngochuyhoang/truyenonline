@@ -60,12 +60,12 @@
                 font-size: 14px;
                 padding: 8px 10px;
                 width: 5%;
-                border: 1px solid #cccccc;
+								border: 1px solid #cccccc;
             }
             thead tr td:nth-child(2) {
                 width: 80%;
-                text-align: center;
-            }
+								text-align: center;
+						}
             tbody tr:nth-child(1) td {
                 height: 40px;
                 border: 1px solid #cccccc;
@@ -82,7 +82,7 @@
             }
             tbody tr td:nth-child(2) {
                 padding: 10px 0 10px 40px ;
-                text-transform: capitalize;
+								text-transform: capitalize;
             }
             tbody tr td:nth-child(3),
             tbody tr td:nth-child(4) {
@@ -137,7 +137,8 @@
 					padding-left: 4px;
 					text-shadow: .1px .1px 1px $color_dark_green;
 				}
-				input[type="text"] {
+				input[type="text"],
+				input[type="password"] {
 					width: 100%;
 					padding: 2.5px;
 					border: 3px solid $color_dark_green;

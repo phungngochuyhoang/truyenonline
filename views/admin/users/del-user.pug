@@ -1,0 +1,17 @@
+include ../../layout/admin_layout.pug 
+	block content 
+		.container-fluid.container-category-del
+			.row
+				.col-xl-12
+					.box-form
+						form(action="" method="post")
+							p Bạn có chắc là muốn xóa người dùng <br>
+								span= username ? username.username : ''
+								| ?
+							ul
+								li
+									button(type="submit") Xóa
+									a(href="/admin/users") Không
+		include ../../layout/script.pug
+
+

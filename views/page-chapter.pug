@@ -1,0 +1,24 @@
+include layout/user_layout.pug
+block content 
+body.color
+	span.hide= chapter[0].content
+	.container
+		h3.title-name Chương
+			span=  ': '
+			span= chapter[0].name
+		.move-chapter
+			a(href="/chapter/" + previd, style=first==0?"display: none":" ") Chương trước
+			a(href="/chapter/" + nextid, style=nextid==undefined?"display: none":" ") Chương sau
+		.row.flex.justify-content-center
+			.col-xl-9.container-content
+				#content 
+		.move-chapter
+			a(href=href="/chapter/" + previd, style=first==0?"display: none":" ") Chương trước
+			a(href=href="/chapter/" + nextid, style=nextid==undefined?"display: none":" ") Chương sau
+	include layout/script.pug 
+	script. 
+		$('.hide').hide();
+		let content = document.getElementById("content");
+		let str = $('.hide')[0].innerText;
+		content.innerHTML = str;
+

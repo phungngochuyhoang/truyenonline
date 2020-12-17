@@ -1,0 +1,15 @@
+footer
+	.introduce
+		h4  Gi&#x1EDB;i thi&#x1EC7;u 
+		p
+			| Story l&agrave; n&#x1A1;i &dstrok;&#x1ECD;c truy&#x1EC7;n ch&#x1EEF; online Website lu&ocirc;n c&#x1EAD;p nh&#x1EAD;t nh&#x1EEF;ng
+			| b&#x1ED9; truy&#x1EC7;n m&#x1EDB;i thu&#x1ED9;c c&aacute;c th&#x1EC3; lo&#x1EA1;i &dstrok;&#x1EB7;c s&#x1EAF;c nh&#x1B0; truy&#x1EC7;n ti&ecirc;n hi&#x1EC7;p,
+			| truy&#x1EC7;n ki&#x1EBF;m hi&#x1EC7;p, hay truy&#x1EC7;n ng&ocirc;n t&igrave;nh m&#x1ED9;t c&aacute;ch nhanh nh&#x1EA5;t.
+			| H&#x1ED7; tr&#x1EE3; m&#x1ECD;i thi&#x1EBF;t b&#x1ECB; nh&#x1B0; di &dstrok;&#x1ED9;ng v&agrave; m&aacute;y t&iacute;nh b&#x1EA3;ng.
+	.box-categories
+		h4  Th&#x1EC3; lo&#x1EA1;i 
+		ul.box-category
+			each data in category
+				li
+					a(href="/category/" + data._id)= data.name
+p.text  &copy; Phung Hoang 2021 
