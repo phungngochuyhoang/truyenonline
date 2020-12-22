@@ -1,0 +1,102 @@
+include ../../layout/admin_layout.pug 
+	block content 
+		.container-fluid.container-add-cat
+			.row
+				.col-lg-12.col-xl-12
+					.box-back
+						a(href="/admin/users") 
+							i.fas.fa-long-arrow-alt-left 
+							| back
+					form(action='', enctype="multipart/form-data", method='POST', id="form-add")
+						ul
+							li
+								label  Tên người dùng
+								input(type='text', name='username', autocomplete="off" class="add_name")
+							li
+								label Mật khẩu 
+								input(type='text', name='password', autocomplete="off" class="password")
+							li
+								label Email
+								input(type="text", name="email", autocomplete="off" class="email")
+							li 
+								label Hình ảnh
+								.box-image 
+									input(type="file", name="avatar", class="image")
+									span.name-image
+							li 
+								label Phân quyền
+								select#categories.categories.role(name="role")
+									option.list-option(value="0" selected) User
+									option.list-option(value="1") Manager 
+							li.mt-4
+								button(type='submit', name='submit' id="dialog-link") Tạo
+					#dialog
+						p.text-center
+							span#text
+	include ../../layout/script.pug
+	script.
+		$("#dialog").dialog({
+			autoOpen: false,
+			width: 380,
+			height: 150,
+			position: {
+				my: "center",
+				at: "center",
+				of: window
+			},
+			buttons: [
+				{
+					text: "Cancel",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			]
+		})
+		$('.image').change(function (event) {
+			var nameImage = document.querySelectorAll('.name-image')[0];
+			nameImage.innerHTML = event.target.value;
+		})
+		$("#dialog-link").click(function( event ) {
+			var name = document.getElementsByClassName('add_name')[0]; 
+			var password = document.getElementsByClassName('password')[0];
+			var image = document.getElementsByClassName('image')[0];
+			var email = document.querySelectorAll('.email')[0];
+			var textErr = document.getElementById('text');
+				if(!name.value) {
+					$("#dialog" ).dialog( "open" );
+					textErr.innerHTML= 'Bạn cần điền tên người dùng';
+					event.preventDefault();
+					return;
+				}
+				if(!password.value) {
+					$("#dialog" ).dialog( "open" );
+					textErr.innerHTML= 'Bạn cần điền mật khẩu';
+					event.preventDefault();
+					return;
+				}
+				if(!password.value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/gm)) {
+						$("#dialog" ).dialog( "open" );
+						textErr.innerHTML= 'Password phải có ít nhất một kí tự đặc biệt, chữ hoa, chữ thường và số';
+						event.preventDefault();
+						return;
+				}
+				if(!email.value) {
+					$("#dialog" ).dialog( "open" );
+					textErr.innerHTML= 'Bạn cần thêm Email';
+					event.preventDefault();
+					return;
+				} 
+				if(!email.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+					$("#dialog" ).dialog( "open" );
+					textErr.innerHTML= 'Email không hợp lệ';
+					event.preventDefault();
+					return;
+				}
+				if(!image.value) {
+					$("#dialog" ).dialog( "open" );
+					textErr.innerHTML= 'Bạn cần thêm ảnh';
+					event.preventDefault();
+					return;
+				}
+		});

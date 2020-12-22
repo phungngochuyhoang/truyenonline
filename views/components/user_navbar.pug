@@ -26,7 +26,7 @@
 						ul.list-category
 							each data in category
 								li
-									a(href='/' class='list')= data.name
+									a(href="/category/" + data._id)= data.name
 		.col-lg-7.col-xl-7
 			ul.navbar-header-right
 				li
@@ -42,7 +42,7 @@
 							span.hr
 							a(href='/register')  &Dstrok;&abreve;ng k&yacute; 
 						else
-							if user.username === 'admin'
+							if user.role === 2 || user.role === 1
 								span
 									a.username(href="/admin")= user.username
 								span

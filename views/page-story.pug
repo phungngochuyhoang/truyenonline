@@ -1,0 +1,149 @@
+include layout/user_layout.pug
+block content 
+	include ./components/user_navbar.pug
+	.container.container-page-story
+		.row
+			.col-lg-9.col-xl-9
+				.page-story
+					.head
+						.box-img
+							img(src=story.avatar alt='not img')
+						.box-cnt
+							h4= story.name
+							ul
+								li
+									span.glyphicon.glyphicon-user
+									span  T&aacute;c gi&#x1EA3;: 
+									span.author-name= story.author
+								li
+									span.glyphicon.glyphicon-tag
+									span  Th&#x1EC3; lo&#x1EA1;i: 
+									span.category-name
+										each data in story.categories_name
+											span.badge.badge-secondary.ml-2.size= data
+								li
+									span.glyphicon.glyphicon-info-sign
+									span  tr&#x1EA1;ng th&aacute;i: 
+									span(class= story.statusFinishAndUnfinished ? "status-success text-success font-weight-bold" : "status-success text-danger font-weight-bold")
+										spa= story.statusFinishAndUnfinished ? "Hoàn thành" : "Chưa hoàn thành"
+								li
+									span.glyphicon.glyphicon-stats
+									span  &dstrok;&#x1ED9; d&agrave;i: 
+									span.chapter-length= chapLen 
+									-var id = chapter.length === 0 ? "error" : chapter[0]._id
+							a.btn-read.btn-read-story(href="/chapter/" + id)  &Dstrok;&#x1ECD;c truy&#x1EC7;n 
+							a.btn-read.btn-read-new(href="")  &Dstrok;&#x1ECD;c truy&#x1EC7;n m&#x1EDB;i nh&#x1EA5;t 
+							a.btn-read.btn-read-follow(href="" id=showHidFollow)  Theo d&otilde;i truy&#x1EC7;n 
+					.body
+						h4  Th&ocirc;ng tin truy&#x1EC7;n 
+						p.content= story.note
+						h4  Danh s&aacute;ch ch&#x1B0;&#x1A1;ng 
+						ul.list-chapter
+							if chapter.length > 0
+								each data, index in chapter
+									li
+										a(href="/chapter/" + data._id)= `Chương ${index+1}: `
+											span= data.name
+							else
+								li không có chương
+						h4  B&igrave;nh lu&#x1EAD;n 
+					.footer
+						form(action='')
+							.box-input
+								textarea(name='comment' id='' cols='30' rows='10' placeholder='Thêm bình luận...')
+							.box-input
+								button(type='submit')  &Dstrok;&abreve;ng 
+						.comment-users
+							ul
+								// user comment
+								li
+									.head
+										img(src='./assets/img/unnamed.png' alt='')
+									.body
+										p.name  Hoang 
+										p.content  Truy&#x1EC7;n n&agrave;y kh&aacute; hay :) 
+										p.function
+											a(href='')  Th&iacute;ch 
+											a(href='')  Ph&#x1EA3;n h&#x1ED3;i 
+										// rep
+										.rep
+											.head
+												img(src='./assets/img/unnamed.png' alt='')
+											.body
+												p.name  Bu 
+												p.content  Hay that 
+												p.function
+													a(href='')  Th&iacute;ch 
+													a(href='')  Ph&#x1EA3;n h&#x1ED3;i 
+										// rep
+								// user comment
+								li
+									.head
+										img(src='./assets/img/unnamed.png' alt='')
+									.body
+										p.name  Duong 
+										p.content
+											| Truy&#x1EC7;n qu&aacute; hay 
+											br
+											|  tuy&#x1EC7;t c&uacute; m&egrave;o &dstrok;en
+										p.function
+											a(href='')  Th&iacute;ch 
+											a(href='')  Ph&#x1EA3;n h&#x1ED3;i 
+										.rep
+											.head
+												img(src='./assets/img/unnamed.png' alt='')
+											.body
+												p.name  Bu 
+												p.content  Hay that 
+												p.function
+													a(href='')  Th&iacute;ch 
+													a(href='')  Ph&#x1EA3;n h&#x1ED3;i 
+										.rep
+											.head
+												img(src='./assets/img/unnamed.png' alt='')
+											.body
+												p.name  Bu 
+												p.content  Hay that 
+												p.function
+													a(href='')  Th&iacute;ch 
+													a(href='')  Ph&#x1EA3;n h&#x1ED3;i 
+								li
+									.head
+										img(src='./assets/img/unnamed.png' alt='')
+									.body
+										p.name  Thien 
+										p.content  Truy&#x1EC7;n hay &dstrok;&oacute; nh&#x1B0;ng th&#x1EB1;ng main ch&iacute;nh nh&igrave;n y&#x1EBF;u &dstrok;u&#x1ED1;i qu&aacute; 
+										p.function
+											a(href='')  Th&iacute;ch 
+											a(href='')  Ph&#x1EA3;n h&#x1ED3;i 
+			.col-lg-3.col-xl-3
+				//- article.advertisement
+				//- 	a(href='#')
+				//- 		img(src='./assets/img/unnamed.png' alt='')
+				.top-follow
+					h4  Truy&#x1EC7;n theo d&otilde;i nhi&#x1EC1;u nh&#x1EA5;t 
+					ul
+						li
+							a(href='#')
+								span.name  Thi&ecirc;n &dstrok;&#x1EBF; 
+								span.time  1 phut
+						li
+							a(href='#')
+								span.name  Thi&ecirc;n &dstrok;&#x1EBF; 
+								span.time  1 phut
+						li
+							a(href='#')
+								span.name  Thi&ecirc;n &dstrok;&#x1EBF; 
+								span.time  1 phut
+						li
+							a(href='#')
+								span.name  Thi&ecirc;n &dstrok;&#x1EBF; 
+								span.time  1 phut
+	include layout/script.pug
+	script. 
+		var list = document.querySelectorAll('.list');
+		list.forEach(item => {
+		var name = xoa_dau(item.innerHTML);
+		var id = item.getAttribute('href');
+		item.setAttribute('href',`/${name}/${id}`)
+		})

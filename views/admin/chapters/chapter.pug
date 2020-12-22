@@ -18,10 +18,10 @@ include ../../layout/admin_layout.pug
 										td Chương
 									tr
 										td
-											input(type="text" id="" placeholder="Lọc truyện")
+											input(type="text" id="" name="filter-name" placeholder="Lọc truyện")
 								tbody
 									each value, index in data 
-										tr
+										tr.item
 											td= `Chương ${index + 1}: ${value.name}`
 											td 
 												a(href=`/admin/chapter/${value._id}/edit`).mr-4.text-secondary
@@ -31,3 +31,16 @@ include ../../layout/admin_layout.pug
 													i.fas.fa-trash.pr-1
 													| Xóa
 		include ../../layout/script.pug
+		script.
+			var input = document.querySelector("[name='filter-name']");
+			var item = document.querySelectorAll('.item');
+			input.addEventListener('keyup', function(e) {
+				let name = e.target.value;
+				item.forEach((item) => {
+					if(item.children[0].innerHTML.toLowerCase().indexOf(name) !== -1) {
+						item.style.display = '';
+					}else {
+						item.style.display = 'none'
+					}
+				})
+			})
