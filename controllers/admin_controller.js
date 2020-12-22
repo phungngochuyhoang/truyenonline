@@ -1,6 +1,9 @@
+const md5 = require('md5');
 const Category = require('../models/category_model');
 const Story = require('../models/stories_model');
 const Chapter = require('../models/chapter_model');
+const User = require('../models/user_model');
+
 //  only one data story
 module.exports.post_data = async function (req, res) {
 	let dataStories = await Story.find({_id: req.params.id});
@@ -8,12 +11,15 @@ module.exports.post_data = async function (req, res) {
 }
 // data stories 
 module.exports.post_datas = async function (req, res) {
-	let dataStories = await Story.find();
+	let dataStories = await Story.find().sort({createDay: -1});
 	res.json(dataStories)
 }
 // admin
-module.exports.get_admin = function (req, res) {
-  res.render('admin/admin');
+module.exports.get_admin = async function (req, res) {
+	let user = await User.find({_id: req.signedCookies.userid})
+  res.render('admin/admin', {
+		img: user[0].avatar
+	});
 }
 // exit
 module.exports.get_exit = function (req, res) {
@@ -23,9 +29,11 @@ module.exports.get_exit = function (req, res) {
 // category 
 module.exports.get_category = async function (req, res) {
 	let dataCategory = await Category.find();
+	let user = await User.find({_id: req.signedCookies.userid})
   res.render('admin/category/category', {
 		title: 'Category',
-		data: dataCategory
+		data: dataCategory,
+		img: user[0].avatar
 	})
 }
 // add category 
@@ -84,9 +92,11 @@ module.exports.get_search_category = async function (req, res) {
 }
 // post post stories
 module.exports.get_post_stories = async function (req, res) {
-	let dataStories = await Story.find();
+	let dataStories = await Story.find().sort({createDay: -1});
+	let user = await User.find({_id: req.signedCookies.userid})
 	res.render('admin/posts/post', {
-		stories: dataStories
+		stories: dataStories,
+		img: user[0].avatar
 	})
 }
 // create post stories
@@ -165,9 +175,11 @@ module.exports.post_delStory = function (req, res) {
 // chapter story
 module.exports.get_chapters = async function (req, res) {
 	let chapters = await Chapter.find({id_story: req.params.id});
+	let user = await User.find({_id: req.signedCookies.userid})
 	res.render('admin/chapters/chapter', {
 		id: req.params.id,
-		data: chapters
+		data: chapters,
+		img: user[0].avatar
 	})
 }
 // create chapter
@@ -216,4 +228,68 @@ module.exports.post_delChapter = async function (req, res) {
 	.catch(err => err)
 	res.redirect('/admin/chapter/' + id)
 }
+// view user
+module.exports.get_users = async function (req, res) {
+	let dataUser = await User.find();
+	res.render('admin/users/manager-users', {
+		users: dataUser,
+		img: dataUser[0].avatar
+	});
+}
+// create user
+module.exports.get_createUser = function (req, res) {
+	res.render('admin/users/create-user');
+}
 
+module.exports.post_createUser = async function (req, res) {
+	req.body.avatar = req.file.path.split('\\').slice(1).join('\\');
+	console.log(req.body)
+	User({
+		username: req.body.username,
+		password:	md5(req.body.password),
+		email: req.body.email,
+		role: parseInt(req.body.role),
+		avatar: req.body.avatar
+	}).save()
+	res.redirect("/admin/users");
+}
+// edit user
+module.exports.get_editUser = async function (req, res) {
+	let userData = await User.find({_id: req.params.id})
+	res.render('admin/users/edit-user', {
+		user: userData
+	})
+}
+module.exports.post_editUser = async function (req, res) {
+	console.log(req.body)
+	let data = {
+		username: req.body.username,
+		password: req.body.password,
+		email: req.body.email,
+		avatar: req.body.avatar_edit.indexOf('uploads') !== -1 ? req.body.avatar_edit : req.file.path.split('\\').slice(1).join('\\'),
+		role: req.body.role,
+	}
+	User.updateOne({_id: req.params.id},{$set: {
+			username: data.username,
+			password: data.password,
+			email: data.email,
+			avatar: data.avatar,
+			role: data.role
+	}})
+	.then((data) => data)
+	.catch((error) => error)
+	res.redirect("/admin/users")
+}
+// del user
+module.exports.get_delUser = async function (req, res) {
+	let user = await User.find({_id: req.params.id})
+	res.render('admin/users/del-user', {
+		username: user[0]
+	})
+}
+module.exports.post_delUser = async function (req, res) {
+	User.deleteOne({_id: req.params.id})
+	.then(data => data)
+	.catch(err => err)
+	res.redirect('/admin/users/')
+}

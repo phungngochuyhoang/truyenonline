@@ -36,7 +36,6 @@
     }
 }
 .navbar-header-right {
-    padding: 2px;
     position: absolute;
     right: 50px;
     li:nth-child(1) {
@@ -111,7 +110,7 @@
     width: 80%;
     position: absolute;
     left: 140px;
-    top: 38px;
+    top: 35px;
     display: none;
     z-index: 2;
     .list-category {

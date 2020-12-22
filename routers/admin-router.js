@@ -8,8 +8,6 @@ const controllers = require('../controllers/admin_controller');
 
 
 const router = express.Router();
-
-
 // admin
 router.get('/', controllers.get_admin)
 // exit
@@ -49,9 +47,21 @@ router.post('/chapter/:id/edit', controllers.post_editChapter)
 // delete chapter
 router.get('/chapter/:id/del', controllers.get_delChapter)
 router.post('/chapter/:id/del', controllers.post_delChapter)
+// view user
+router.get('/users', controllers.get_users)
+// view create user view
+router.get('/users/add', controllers.get_createUser)
+router.post('/users/add', upload, controllers.post_createUser)
+// view edit user view
+router.get('/user/edit/:id', controllers.get_editUser)
+router.post('/user/edit/:id', upload, controllers.post_editUser)
+// view delete user view
+router.get('/user/del/:id', controllers.get_delUser)
+router.post('/user/del/:id', controllers.post_delUser)
 
 // data story
 router.post('/post/data/:id', controllers.post_data)
 router.post('/post/data', controllers.post_datas);
+
 
 module.exports = router;

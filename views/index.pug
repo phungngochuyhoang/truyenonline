@@ -1,11 +1,126 @@
 include layout/user_layout.pug
+body
 block content
+	.box-loading
+		.loader
+			span(style="--i:1;")
+			span(style="--i:2;")
+			span(style="--i:3;")
+			span(style="--i:4;")
+			span(style="--i:5;")
+			span(style="--i:6;")
+			span(style="--i:7;")
+			span(style="--i:8;")
+			span(style="--i:8;")
+			span(style="--i:9;")
+			span(style="--i:10;")
+			span(style="--i:11;")
+			span(style="--i:12;")
+			span(style="--i:13;")
+			span(style="--i:14;")
+			span(style="--i:15;")
+			span(style="--i:16;")
+			span(style="--i:17;")
+			span(style="--i:18;")
+			span(style="--i:19;")
+			span(style="--i:20;")
 	include ./components/user_navbar.pug
-	
+	.container-fluid.container-nominations
+		.row
+			.col-xl-12
+				.row
+					.box-slide-nominations.col-md-12.col-lg-4.col-xl-4
+						.swiper-container
+							.swiper-wrapper
+								each data in slides
+									.swiper-slide
+										.slide-head
+											img(src=`${data.avatar}` alt='not img')
+										.slide-body
+											.intro
+												p.name
+													a(href="story/" + data._id)= data.name
+												p.content= data.note
+							.swiper-button-next
+							.swiper-button-prev
+					.box-list-nominations.col-md-12.col-lg-8.col-xl-8
+						.list.list-follow
+							each data in doc
+								.story
+									.head
+										p.name
+											a(href="story/" + data._id)= data.name
+										p.follow
+											span.number-follow  1000000 
+											| &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;ng&#x1B0;&#x1EDD;i Theo d&otilde;i
+									.body
+										p= data.note
+						ul.list.list-top
+							h4  Truy&#x1EC7;n m&#x1EDB;i c&#x1EAD;p nh&#x1EAD;t 
+							each data in top
+								li
+									a(href="story/" + data._id).story-name
+										span.name= data.name
+									span.date= data.createDay
+	.container.container-lib
+		.row
+			.col-xl-12
+				.box-stories-reading
+					h4  T&#x1EE7; Truy&#x1EC7;n 
+					ul.library-story#data-container
+					#pagination-container.pagi
+	include ./layout/footer.pug
 include layout/script.pug
 script. 
-	var list = document.querySelectorAll('.list');
-	list.forEach(item => {
-		var name = xoa_dau(item.innerHTML);
-		item.setAttribute('href',`/${name}`)
-	})
+	var swiper = new Swiper('.swiper-container', {
+				navigation: {
+					nextEl: '.swiper-button-next',
+					prevEl: '.swiper-button-prev',
+				},
+			});
+	$.ajax({
+		dataType: 'json',
+		type: 'post',
+		url: 'http://localhost:3000/post/data',
+		}).done(function(data) {
+			return handleData(data)
+		})
+
+		function handleData(dt) {
+			function simpleTemplating(data) {
+				var html = '';
+				$.each(data, function(index, item){
+						html += `
+							<li>
+								<a class="img" href="story/${item._id}"><img src="${item.avatar}" alt="not img" width="50"/></a>
+								<a class="name story-name" href="story/${item._id}"> <span>${item.name}</span><span class="date"> ${new Date(item.createDay).getDate()}-${new Date(item.createDay).getMonth() + 1}-${new Date(item.createDay).getFullYear()} ${new Date(item.createDay).getHours()}:${new Date(item.createDay).getMinutes()}${new Date(item.createDay).getHours() < 12 ? 'AM' : 'PM'} </span></a>
+								<span class="author"> ${item.author} </span>
+							</li>
+						`
+				});
+				return html;
+			}
+			$('#pagination-container').pagination({
+					dataSource: dt,
+					pageSize: 20,
+					callback: function(data, pagination) {
+							var html = simpleTemplating(data);
+							$('#data-container').html(html);
+					}
+			})
+			var storyName = document.querySelectorAll('.story-name');
+			storyName.forEach((item) => {
+				var ids = item.getAttribute('href');
+				var name = xoa_dau(item.children[0].innerHTML);
+				item.setAttribute('href',`/${ids}`)
+			})
+		}
+		window.onload = function(e) {
+			document.body.classList.add("loading-index");
+			setTimeout(function() {
+				document.body.classList.remove("loading-index");
+				$('.box-loading').hide()
+			}, Math.floor(e.timeStamp) + 1)
+		}
+
+

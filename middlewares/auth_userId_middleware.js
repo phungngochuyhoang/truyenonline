@@ -9,14 +9,12 @@ module.exports.auth_userId = async function(req, res, next) {
     }
     let userCookie = await User.find({_id: userId})
     if(!userCookie) {
-       res.redirect('login') 
-       return;
+			res.redirect('login') 
+			return;
     }
     if(userCookie[0].role === 0) {
-        res.redirect('login') 
+        res.redirect('/') 
         return;
-    }
+		}
     next()
 }
-
-

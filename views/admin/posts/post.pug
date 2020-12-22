@@ -38,7 +38,7 @@ block content
 							table
 								thead
 									tr
-										td  ID 
+										td  STT
 										td  T&ecirc;n truy&#x1EC7;n 
 										td  T&aacute;c gi&#x1EA3; 
 										td  Ng&agrave;y t&#x1EA1;o
@@ -47,12 +47,29 @@ block content
 									tr
 										td(colspan='6')
 											input(type='text', name='filter-name', placeholder='Lọc truyện') 
-								tbody#data-container
-							<div id="pagination-container"></div>
+								tbody
+									each data, index in stories
+										tr.item
+											td= index+1
+											td
+												a(href=`/admin/chapter/${data._id}`)= data.name
+											td= data.author
+											td= `${new Date(data.createDay).getDate()}-${new Date(data.createDay).getMonth() + 1}-${new Date(data.createDay).getFullYear()} ${new Date(data.createDay).getHours()}:${new Date(data.createDay).getMinutes()}${new Date(data.createDay).getHours() < 12 ? 'AM' : 'PM'}`
+											td
+												span(class=`${data.statusFinishAndUnfinished ? "badge badge-success" : "badge badge-danger"}`)= data.statusFinishAndUnfinished ? "Hoàn thành" : "Chưa hoàn thành"
+											td
+												span(class=`${data.statusShowHide ? "badge badge-success" : "badge badge-danger"}`)= data.statusShowHide ? "Hiện" : "Ẩn"
+											td
+												a.text-secondary(href='/admin/post/edit/' + data._id)
+													i.fas.fa-pen
+													|  S&#x1EED;a
+												a.text-danger(href='/admin/post/del/' + data._id)
+													i.fas.fa-trash
+													|  X&oacute;a
 		include ../../layout/script.pug
 		script. 
 			window.onload = function(e) {
-				if(Math.floor(e.timeStamp) < 3000) {
+				if(Math.floor(e.timeStamp) <= e.timeStamp) {
 					$('#data-container').hide()
 					$('#pagination-container').hide()
 					$('.box-loading').show()
@@ -60,13 +77,14 @@ block content
 						$('#data-container').show()
 						$('.box-loading').hide()
 						var item = document.querySelectorAll('.item');
-						if(item.length > 20) {
+						if(item.length >= 20) {
 							$('#pagination-container').show()
 						}
 						var input = document.querySelector("[name='filter-name']");
 						input.addEventListener('keyup', function(e) {
 							item.forEach((item) => {
-								if(item.children[1].innerHTML.indexOf(input.value) !== -1) {
+								console.log(item.children[1].children[0].innerHTML, item.children[1].children[0].innerHTML)
+								if(item.children[1].children[0].innerHTML.indexOf(e.target.value.toUpperCase()) !== -1) {
 									item.style.display = '';
 								}else {
 									item.style.display = 'none'
@@ -76,43 +94,3 @@ block content
 					}, Math.floor(e.timeStamp))
 				}
 			}
-			$.ajax({
-				dataType: 'json',
-				type: 'post',
-				url: 'http://localhost:3000/admin/post/data',
-				}).done(function(data) {
-					hanldeCheck(data)
-			})
-			function hanldeCheck(datas) {
-				function simpleTemplating(data) {
-					var html;
-					$.each(data, function(index, item){
-							html += `<tr class="item">
-												<td> ${index + 1} </td>
-												<td> 
-													<a href="/admin/chapter/${item._id}"> ${item.name} </a>
-												</td>
-												<td> ${item.author} </td>
-												<td> ${new Date(item.createDay).getDate()}-${new Date(item.createDay).getMonth() + 1}-${new Date(item.createDay).getFullYear()} ${new Date(item.createDay).getHours()}:${new Date(item.createDay).getMinutes()}${new Date(item.createDay).getHours() < 12 ? 'AM' : 'PM'}</td>
-												<td>
-													${item.statusFinishAndUnfinished ? "<span class='badge badge-success'> Hoàn thành </span>" : "<span class='badge badge-danger'> Chưa hoàn thành </span>"}
-												</td>
-												<td> 
-													${item.statusShowHide ? "<span class='badge badge-success'> Hiện </span>" : "<span class='badge badge-danger'> Ẩn </span>"}
-												</td>
-												<td> 
-													<a href='/admin/post/edit/${item._id}' class="text-secondary"><i class="fas fa-pen"></i> Sửa </a>
-													<a href="/admin/post/del/${item._id}" class="text-danger"><i class="fas fa-trash"></i> Xóa </a>
-												</td>
-											</tr>`;
-						});
-						return html;
-					}
-					$('#pagination-container').pagination({
-						dataSource: datas,
-						callback: function(data, pagination) {
-								var html = simpleTemplating(data);
-								$('#data-container').html(html);
-						}
-				})
-			}	

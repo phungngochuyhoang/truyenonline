@@ -32,6 +32,7 @@ block content
 	script. 
 		var list = document.querySelectorAll('.list');
 		list.forEach(item => {
-			var name = xoa_dau(item.innerHTML);
-			item.setAttribute('href',`/${name}`)
+		var name = xoa_dau(item.innerHTML);
+		var id = item.getAttribute('href');
+		item.setAttribute('href',`/${name}/${id}`)
 		})

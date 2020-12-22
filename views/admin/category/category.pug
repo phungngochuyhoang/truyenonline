@@ -42,7 +42,7 @@ include ../../layout/admin_layout.pug
 			var item = document.querySelectorAll('.item');
 			input.addEventListener('keyup', function(e) {
 				item.forEach((item) => {
-					if(item.children[1].innerHTML.toLowerCase().indexOf(input.value) !== -1 || item.children[1].innerHTML.toUpperCase().indexOf(input.value) !== -1 || item.children[1].innerHTML.indexOf(input.value) !== -1) {
+					if(item.children[1].innerHTML.toLowerCase().indexOf(e.target.value) !== -1 || item.children[1].innerHTML.toUpperCase().indexOf(e.target.value) !== -1 || item.children[1].innerHTML.indexOf(e.target.value) !== -1) {
 						item.style.display = '';
 					}else {
 						item.style.display = 'none'
