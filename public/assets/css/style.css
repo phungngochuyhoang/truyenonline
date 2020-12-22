@@ -2404,6 +2404,12 @@ footer .box-categories .box-category li a {
   opacity: .9;
 }
 
+.container-char {
+  width: 80%;
+  height: 200px;
+  margin: auto;
+}
+
 * {
   margin: 0;
   padding: 0;
