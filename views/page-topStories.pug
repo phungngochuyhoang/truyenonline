@@ -1,0 +1,16 @@
+include layout/user_layout.pug
+block content 
+body(style="background: url('./assets/img/bg1.jpg') center;background-size: cover;")
+	include ./components/user_navbar.pug
+	.container
+		.row 
+			.col-md-12.col-lg-12.col-xl-12
+				.box-top
+					h3 Bảng xếp hạng theo dõi
+					ul.card-top
+						each data, index in story
+							li
+								span= index + 1
+								span
+									a(href="#")= data[0].name
+	include layout/script.pug

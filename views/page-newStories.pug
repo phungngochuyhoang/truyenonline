@@ -1,0 +1,16 @@
+include layout/user_layout.pug
+block content 
+body(style="background: url('./assets/img/bg1.jpg') center;background-size: cover;")
+	include ./components/user_navbar.pug
+	.container
+		.row
+			.col-md-12.col-lg-12.col-xl-12
+				ul.box-new-stories
+					h3 Truyện mới
+					each data in story
+						li 
+							span 
+								a(href="")= data.name
+							span= data.author
+							span= `${(new Date().getDate() - data.createDay.getDate() > 0 ? (new Date().getDate() - data.createDay.getDate() + " ngày") : "")} ${new Date().getHours() - data.createDay.getHours() > 0 ? (new Date().getHours() - data.createDay.getHours()) + " giờ" : ""} ${new Date().getMinutes() - data.createDay.getMinutes() > 0 ? (new Date().getMinutes() - data.createDay.getMinutes()) + " phút" : ""} trước`
+	include layout/script.pug

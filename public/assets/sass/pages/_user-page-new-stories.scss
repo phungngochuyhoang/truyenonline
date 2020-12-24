@@ -1,0 +1,33 @@
+.box-new-stories {
+	border: 1px solid #cccccc;
+	padding: 10px;
+	width: 100%;
+	box-shadow: .1px .1px 2px #cccccc;
+	background-color: $color_white;
+	h3 {
+		margin-top: 50px;
+		color: $color_dark_green;
+	}
+	li {
+		list-style: none;
+		border-bottom: 1px dashed #cccccc;
+		padding: 15px 0 2px;
+		span {
+			color: $color_dark_green;
+			padding-right: 5em;
+			a {
+				text-decoration: none;
+				padding-right: 5em;
+				width: 450px;
+				display: inline-block;
+			}
+		}
+		span:nth-child(2) {	
+			width: 250px;
+			display: inline-block;
+		}
+	}
+	li:last-child {
+		border-bottom: 0;
+	}
+}
