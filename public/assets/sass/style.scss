@@ -3,6 +3,7 @@
 @import './abstracts/animation';
 @import './layouts/footer';
 @import './layouts/header';
+@import './layouts/responsive';
 @import './components/navbar';
 @import './pages/login';
 @import './pages/home';
@@ -13,6 +14,12 @@
 @import './pages/user-page';
 @import './pages/user-chapter';
 @import './pages/admin-users';
+@import './pages/admin-char';
+@import './pages/user-profile';
+@import './pages/user-page-top';
+@import './pages/user-page-new-stories';
+@import './pages/user-page-success';
+@import './pages/error';
 
 
 * {

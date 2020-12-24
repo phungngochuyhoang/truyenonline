@@ -29,7 +29,7 @@ block content
 		.row
 			.col-xl-12
 				.row
-					.box-slide-nominations.col-md-12.col-lg-4.col-xl-4
+					.box-slide-nominations.col-sm-12.col-md-12.col-lg-4.col-xl-4
 						.swiper-container
 							.swiper-wrapper
 								each data in slides
@@ -43,7 +43,7 @@ block content
 												p.content= data.note
 							.swiper-button-next
 							.swiper-button-prev
-					.box-list-nominations.col-md-12.col-lg-8.col-xl-8
+					.box-list-nominations.col-sm-12.col-md-12.col-lg-8.col-xl-8
 						.list.list-follow
 							each data in doc
 								.story
@@ -61,7 +61,7 @@ block content
 								li
 									a(href="story/" + data._id).story-name
 										span.name= data.name
-									span.date= data.createDay
+									span.date= `${(new Date().getDate() - data.createDay.getDate() > 0 ? (new Date().getDate() - data.createDay.getDate() + " ngày") : "")} ${new Date().getHours() - data.createDay.getHours() > 0 ? (new Date().getHours() - data.createDay.getHours()) + " giờ" : ""} ${new Date().getMinutes() - data.createDay.getMinutes() > 0 ? (new Date().getMinutes() - data.createDay.getMinutes()) + " phút" : ""} trước`
 	.container.container-lib
 		.row
 			.col-xl-12
@@ -76,6 +76,13 @@ script.
 				navigation: {
 					nextEl: '.swiper-button-next',
 					prevEl: '.swiper-button-prev',
+				},
+				autoplay: {
+					delay: 3000,
+				},
+				effect: "fade",
+				fadeEffect: {
+					crossFade: true
 				},
 			});
 	$.ajax({

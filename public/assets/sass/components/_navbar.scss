@@ -139,3 +139,9 @@
 .navbar-category-2:hover > .nav-list-category {
     display: block;
 }
+
+@media screen and (min-width: 700px) and (max-width: 900px) {
+	.navbar-header-left {
+		padding-left: 0;
+	}
+}

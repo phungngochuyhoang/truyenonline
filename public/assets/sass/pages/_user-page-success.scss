@@ -1,0 +1,25 @@
+.box-successs {
+	border: 1px solid #cccccc;
+	padding: 10px;
+	box-shadow: .1px .1px 2px #cccccc;
+	background-color: $color_white;
+	height: 100vh;
+	h3 {
+		margin-top: 50px;
+		color: $color_dark_green;
+	}
+	li {
+		list-style: none;
+		border-bottom: 1px dashed #cccccc;
+		padding: 15px 0 2px;
+		span {
+			color: $color_dark_green;
+			padding-right: 5em;
+			display: inline-block;
+			width: 350px;
+		}
+	}
+	li:last-child {
+		border-bottom: 0;
+	}
+}

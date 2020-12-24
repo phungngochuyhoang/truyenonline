@@ -59,9 +59,10 @@ router.post('/user/edit/:id', upload, controllers.post_editUser)
 router.get('/user/del/:id', controllers.get_delUser)
 router.post('/user/del/:id', controllers.post_delUser)
 
-// data story
+// data api
 router.post('/post/data/:id', controllers.post_data)
 router.post('/post/data', controllers.post_datas);
-
+router.post('/post/user', controllers.post_dataUser);
+router.post('/post/statistical', controllers.post_statistical)
 
 module.exports = router;

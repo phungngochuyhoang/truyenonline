@@ -5,11 +5,8 @@ const userSchema = new mongoose.Schema({
     password: String,
 		email: String,
 		avatar: String,
-    date: {
-        type: Date, 
-        default: Date.now
-    },
-    role: Number
+		role: Number,
+    date: {type: Date, default: Date.now},
 })
 
 const User = mongoose.model('User', userSchema, 'Users')
