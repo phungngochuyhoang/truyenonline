@@ -3,6 +3,7 @@ const Category = require('../models/category_model');
 const Story = require('../models/stories_model');
 const Chapter = require('../models/chapter_model');
 const User = require('../models/user_model');
+const Follow = require('../models/follow_model');
 
 //  only one data story
 module.exports.post_data = async function (req, res) {
@@ -14,11 +15,35 @@ module.exports.post_datas = async function (req, res) {
 	let dataStories = await Story.find().sort({createDay: -1});
 	res.json(dataStories)
 }
+// data user
+module.exports.post_dataUser = async (req, res) => {
+	let dataUser = await User.find();
+	res.json(dataUser);
+}
 // admin
 module.exports.get_admin = async function (req, res) {
 	let user = await User.find({_id: req.signedCookies.userid})
+	let dataUser = await User.find();
+	let dataFollow = await Follow.find();
+	let dataCategory = await Category.find();
+	let dataStory = await Story.find();
+	let datas = {
+		users: dataUser.map(function(item) {
+			return item;
+		}),
+		follows: dataFollow.map(function(item) {
+			return item;
+		}),
+		caterories: dataCategory.map(function(item) {
+			return item;
+		}),
+		stories: dataStory.map(function(item) {
+			return item;
+		}),
+	}
   res.render('admin/admin', {
-		img: user[0].avatar
+		img: user[0].avatar,
+		datas: datas 
 	});
 }
 // exit
@@ -292,4 +317,26 @@ module.exports.post_delUser = async function (req, res) {
 	.then(data => data)
 	.catch(err => err)
 	res.redirect('/admin/users/')
+}
+// statictical 
+module.exports.post_statistical = async function (req, res) {
+	let dataUser = await User.find();
+	let dataFollow = await Follow.find();
+	let dataCategory = await Category.find();
+	let dataStory = await Story.find();
+	let datas = {
+		users: dataUser.map(function(item) {
+			return item;
+		}),
+		follows: dataFollow.map(function(item) {
+			return item;
+		}),
+		caterories: dataCategory.map(function(item) {
+			return item;
+		}),
+		stories: dataStory.map(function(item) {
+			return item;
+		}),
+	}
+	res.json(datas);
 }

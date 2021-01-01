@@ -11,13 +11,11 @@
 					#nav-list-category.nav-list-category
 						ul.list-category
 							li
-								a(href='#')  truy&#x1EC7;n m&#x1EDB;i 
+								a(href='/truyenmoi')  truy&#x1EC7;n m&#x1EDB;i 
 							li
-								a(href='#')  truy&#x1EC7;n ho&agrave;n th&agrave;nh 
+								a(href='/truyenhoanthanh')  truy&#x1EC7;n ho&agrave;n th&agrave;nh 
 							li
-								a(href='#')  b&#x1EA3;ng x&#x1EBF;p h&#x1EA1;ng 
-							li
-								a(href='#')  truy&#x1EC7;n &dstrok;&#x1EC1; c&#x1EED; 
+								a(href='/bangxephang')  b&#x1EA3;ng x&#x1EBF;p h&#x1EA1;ng 
 				.navbar-category.navbar-category-2
 					.navbar-category-btn
 						i.fas.fa-bars
@@ -31,8 +29,8 @@
 			ul.navbar-header-right
 				li
 					.box-search
-						form#search-name
-							input(type='text', name='story-name', value='', placeholder='Tìm tên truyện')
+						form#search-name(action="/search" method="get")
+							input(type='text', name='story-name', value='', placeholder='Tìm tên truyện' autocomplete="off")
 							button.btn-search-name(type='submit')
 								i.fas.fa-search
 				li

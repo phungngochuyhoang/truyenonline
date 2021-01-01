@@ -25,7 +25,7 @@ block content
 									span.glyphicon.glyphicon-info-sign
 									span  tr&#x1EA1;ng th&aacute;i: 
 									span(class= story.statusFinishAndUnfinished ? "status-success text-success font-weight-bold" : "status-success text-danger font-weight-bold")
-										spa= story.statusFinishAndUnfinished ? "Hoàn thành" : "Chưa hoàn thành"
+										span= story.statusFinishAndUnfinished ? "Hoàn thành" : "Chưa hoàn thành"
 								li
 									span.glyphicon.glyphicon-stats
 									span  &dstrok;&#x1ED9; d&agrave;i: 
@@ -33,7 +33,7 @@ block content
 									-var id = chapter.length === 0 ? "error" : chapter[0]._id
 							a.btn-read.btn-read-story(href="/chapter/" + id)  &Dstrok;&#x1ECD;c truy&#x1EC7;n 
 							a.btn-read.btn-read-new(href="")  &Dstrok;&#x1ECD;c truy&#x1EC7;n m&#x1EDB;i nh&#x1EA5;t 
-							a.btn-read.btn-read-follow(href="" id=showHidFollow)  Theo d&otilde;i truy&#x1EC7;n 
+							a.btn-read.btn-read-follow(id=showHidFollow name=story ? story._id: '' name-id=user ? user._id : '') Theo dõi truyện
 					.body
 						h4  Th&ocirc;ng tin truy&#x1EC7;n 
 						p.content= story.note
@@ -48,74 +48,35 @@ block content
 								li không có chương
 						h4  B&igrave;nh lu&#x1EAD;n 
 					.footer
-						form(action='')
+						form(action='' method="post")
 							.box-input
 								textarea(name='comment' id='' cols='30' rows='10' placeholder='Thêm bình luận...')
 							.box-input
 								button(type='submit')  &Dstrok;&abreve;ng 
-						.comment-users
-							ul
+						//- .comment-users
+						//- 	ul
 								// user comment
-								li
-									.head
-										img(src='./assets/img/unnamed.png' alt='')
-									.body
-										p.name  Hoang 
-										p.content  Truy&#x1EC7;n n&agrave;y kh&aacute; hay :) 
-										p.function
-											a(href='')  Th&iacute;ch 
-											a(href='')  Ph&#x1EA3;n h&#x1ED3;i 
+								//- li
+								//- 	.head
+								//- 		img(src='./assets/img/unnamed.png' alt='')
+								//- 	.body
+								//- 		p.name  Hoang 
+								//- 		p.content  Truy&#x1EC7;n n&agrave;y kh&aacute; hay :) 
+								//- 		p.function
+								//- 			a(href='')  Th&iacute;ch 
+								//- 			a(href='')  Ph&#x1EA3;n h&#x1ED3;i 
 										// rep
-										.rep
-											.head
-												img(src='./assets/img/unnamed.png' alt='')
-											.body
-												p.name  Bu 
-												p.content  Hay that 
-												p.function
-													a(href='')  Th&iacute;ch 
-													a(href='')  Ph&#x1EA3;n h&#x1ED3;i 
+										//- .rep
+										//- 	.head
+										//- 		img(src='./assets/img/unnamed.png' alt='')
+										//- 	.body
+										//- 		p.name  Bu 
+										//- 		p.content  Hay that 
+										//- 		p.function
+										//- 			a(href='')  Th&iacute;ch 
+										//- 			a(href='')  Ph&#x1EA3;n h&#x1ED3;i 
 										// rep
 								// user comment
-								li
-									.head
-										img(src='./assets/img/unnamed.png' alt='')
-									.body
-										p.name  Duong 
-										p.content
-											| Truy&#x1EC7;n qu&aacute; hay 
-											br
-											|  tuy&#x1EC7;t c&uacute; m&egrave;o &dstrok;en
-										p.function
-											a(href='')  Th&iacute;ch 
-											a(href='')  Ph&#x1EA3;n h&#x1ED3;i 
-										.rep
-											.head
-												img(src='./assets/img/unnamed.png' alt='')
-											.body
-												p.name  Bu 
-												p.content  Hay that 
-												p.function
-													a(href='')  Th&iacute;ch 
-													a(href='')  Ph&#x1EA3;n h&#x1ED3;i 
-										.rep
-											.head
-												img(src='./assets/img/unnamed.png' alt='')
-											.body
-												p.name  Bu 
-												p.content  Hay that 
-												p.function
-													a(href='')  Th&iacute;ch 
-													a(href='')  Ph&#x1EA3;n h&#x1ED3;i 
-								li
-									.head
-										img(src='./assets/img/unnamed.png' alt='')
-									.body
-										p.name  Thien 
-										p.content  Truy&#x1EC7;n hay &dstrok;&oacute; nh&#x1B0;ng th&#x1EB1;ng main ch&iacute;nh nh&igrave;n y&#x1EBF;u &dstrok;u&#x1ED1;i qu&aacute; 
-										p.function
-											a(href='')  Th&iacute;ch 
-											a(href='')  Ph&#x1EA3;n h&#x1ED3;i 
 			.col-lg-3.col-xl-3
 				//- article.advertisement
 				//- 	a(href='#')
@@ -147,3 +108,25 @@ block content
 		var id = item.getAttribute('href');
 		item.setAttribute('href',`/${name}/${id}`)
 		})
+		var btnFollow = document.getElementById("user-follow");
+		var temp = 0;
+		btnFollow.addEventListener('click', function() {			
+			temp++;	
+			$.post(`http://localhost:3000${window.location.pathname}`, {
+					story_id: btnFollow.getAttribute('name'),
+					status: temp % 2 === 0 ? 0 : 1
+				});
+			temp % 2 === 0 ? btnFollow.innerHTML="Theo dõi truyện" : btnFollow.innerHTML="Bỏ dõi truyện";
+		})
+		$.ajax({
+			dataType: 'json',
+			type: 'post',
+			url: 'http://localhost:3000/post/dataFollow/' + btnFollow.getAttribute('name'),
+			}).done(function(data) {
+				if(data.length !== 0) return handleStatusFollow(data);
+			})
+		function handleStatusFollow(data) { 
+			if(data[0].userId == btnFollow.getAttribute("name-id")) {
+				data[0].status ? btnFollow.innerHTML="Bỏ dõi truyện" : btnFollow.innerHTML="Theo dõi truyện";
+			} 
+		}

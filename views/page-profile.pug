@@ -1,5 +1,44 @@
 include layout/user_layout.pug
 block content 
+body(style="background: url('./assets/img/bg1.jpg') center;background-size:cover;")
 	include ./components/user_navbar.pug
-	p profile
+	.container
+		.row
+			.col-md-12.col-xl-12 
+				.box-profile
+					.head 
+						.box-title
+							h3 Thông tin cá nhân 
+						.box-avatar
+							img(src=user.avatar, alt="not img")
+							p.name-user
+								span= user.username
+					.body
+						ul.box-info-user.col-xl-8
+							form(action="", enctype="multipart/form-data", method="POST")
+								li.box-input
+									input(type="text" name="username" value)
+									label tên người dùng 
+								li.box-input
+									input(type="file" name="avatar" id="avatar-user") 
+									label(for="avatar-user") Đổi ảnh
+									span.replace-img Hình ảnh của bạn
+								li.box-input
+									input(type="text" name="email" value)
+									label email 
+								li.box-input
+									input(type="password" name="password-old" value)
+									label mật khẩu cũ
+								li.box-input
+									input(type="password" name="new-password" value)
+									label mật khẩu mới
+								li.box-input
+									button(type="submit") Thay đổi 
+						.box-follow-stories 
+							h4 Truyện đang theo dõi
+							ul
+								each data in follow
+									li
+										span 
+											a(href="#")= data.name
 	include layout/script.pug

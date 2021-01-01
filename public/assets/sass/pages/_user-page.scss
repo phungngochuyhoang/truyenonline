@@ -50,6 +50,7 @@
 					border-radius: 6px;
 					margin-top: 20px;
 					color:  $color_dark_green;
+					cursor: pointer;
 				}
 				.btn-read-story {
 					margin-right: 10px;
@@ -64,6 +65,7 @@
 				}
 				#user-follow {
 					display: inline-block;
+					background-color: $color_white;
 				}
 			}
 		}	

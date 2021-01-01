@@ -4,6 +4,191 @@ include ../layout/admin_layout.pug
 			.row
 				.col-lg-2.col-xl-2#navbar-1
 					include ../components/admin_navbar.pug
-				.col-lg-10.col-xl-10#navbar-11
-					p= img
+				.col-md-10.col-lg-10.col-xl-10#navbar-11
+					.box-statistical
+						.head
+							h4 Thống kê người dùng
+						.body
+							.box-quatity-user
+								p Tổng số người dùng
+								p= datas.users.length
+							.container-char.col-xl-8
+								canvas#char-statistical-user(width='400' height='150')
+					.box-follow 
+						.head
+							h4 Thống kê theo dõi truyện
+						.body
+							.box-quatity-follow
+								p Tổng số theo dõi
+								p= datas.follows.length
+							.container-char.col-xl-8
+								canvas#char-statistical-follow(width='400' height='200')
 		include ../layout/script.pug
+		script. 	
+			$.ajax({
+				dataType: 'json',
+				type: 'post',
+				url: 'http://localhost:3000/admin/post/statistical',
+			}).done(function(data) {
+				return handleUserInYear(data);
+			})
+
+			function handleUserInYear(datas) {
+				const statisticalUser = document.getElementById('char-statistical-user');
+				var labelMonth = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "tháng 5", "tháng 6", "tháng 7", "tháng 8", "tháng 9", "tháng 10", "tháng 11", "tháng 12"];
+				var dataStatisticalUser = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+				var months = datas.users.map(function(item, index) {
+					let milli = Date.parse(item.date);
+					let day = new Date(milli);
+					let month = day.getMonth();
+					return month;
+				})
+				var years = datas.users.map(function(item, index) {
+					let milli = Date.parse(item.date);
+					let day = new Date(milli);
+					let year = day.getFullYear();
+					return year;
+				})
+				var yearNow = years.find(function(item, index) {
+					return item === new Date().getFullYear()
+				})
+				var handleData= months.reduce(function(accumulator, currentValue){
+								if(typeof accumulator[currentValue] !== "undefined"){
+									accumulator[currentValue]++; 
+									return accumulator;
+								} else {
+										accumulator[currentValue]=1; 
+										return accumulator;
+								}
+						}, {});
+				for(var key in handleData) {
+					dataStatisticalUser.splice(key, 1, handleData[key])
+				}
+				var dataUser = {
+					labels: labelMonth,
+					datasets: [{
+						data: dataStatisticalUser,
+						backgroundColor: 'rgba(20, 100, 10, .6)',
+						borderWidth: 1
+					}]
+				}
+				var optionUser = {
+					title: {	
+						display: true,
+						text: 'Biểu đồ người dùng trong năm ' + yearNow,
+						position: 'bottom',
+						lineHeight: 1.5
+					},
+					legend: {
+						display: false
+					},
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true,
+								callback: function(value) {if (value % 1 === 0) {return value;}}
+							}
+						}]
+					}
+				}
+				let chartUser = new Chart(statisticalUser, {
+					type: 'bar',
+					data: dataUser,
+					options: optionUser
+				});
+				let labelCategory = datas.caterories.map(function(item) {
+					return item.name;
+				})
+				let backgroundColor = [];
+				for(var value of datas.caterories) {
+					backgroundColor.push(`rgba(${randomColor()}, ${randomColor()}, ${randomColor()}, ${.795})`)
+				}
+				let storiesID = datas.follows.map(function(item) {
+					return item.storyId;
+				})
+				let stories = storiesID.map(function(id) {
+					return datas.stories.filter(function(item) {
+						if(item._id === id) {
+							return item._id;
+						}
+					})
+				})
+				let dataStories = stories.map(function(item) {
+					return item.map(function(element) {
+						return element['categories_name'];
+					});
+				})
+				var dataCategories = [];
+				dataStories.forEach(function(item) {
+					return item.forEach(function(ele, index) {
+						return ele.forEach(function(item) {
+							dataCategories.push(item)
+						})
+					})
+				})
+				var handleDataCategories = dataCategories.reduce(function(accumulator, currentValue){
+						if(typeof accumulator[currentValue] !== "undefined"){
+							accumulator[currentValue]++; 
+							return accumulator;
+						} else {
+								accumulator[currentValue]=1; 
+								return accumulator;
+						}
+				}, {});
+				//- var dataStatisticalFollow = [];
+				//- for(var i= 0; i < datas.caterories.length; i++) {
+				//- 	dataStatisticalFollow.push(0)
+				//- }
+				let labeldata = datas.caterories.map(function(item) {
+					return item.name;
+				})
+				for(var key in handleDataCategories) {
+					console.log(key)
+				}
+				labeldata.forEach(function(item) {
+					console.log('-' + item)
+				})
+				console.log(labeldata)
+				var arr = [1, 2, 3, 2, 2]
+				const statisticalFollow = document.getElementById('char-statistical-follow');
+					var dataFollow = {
+					labels: labelCategory,
+					datasets: [{
+						data: arr,
+						backgroundColor: backgroundColor,
+						borderWidth: 1
+					}]
+				}
+				var optionFollow = {
+					title: {	
+						display: true,
+						text: 'Biểu đồ theo dõi truyện ' + yearNow,
+						position: 'top',
+						lineHeight: 1.5,
+						padding: 20,
+					},
+						legend: {
+						position: 'right',
+					},
+					scales: {
+						yAxes: [{
+							display: false,
+							gridLines: {
+								display: false
+							},
+							ticks: {
+								beginAtZero: true,
+								callback: function(value) {if (value % 1 === 0) {return value;}}
+							}
+						}]
+					}
+				}
+				let chartFollow = new Chart(statisticalFollow, {
+					type: 'doughnut',
+					data: dataFollow,
+					options: optionFollow
+				});
+			}
+			function randomColor() {
+				return Math.floor(Math.random() * 255);
+			}
